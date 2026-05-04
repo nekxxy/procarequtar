@@ -11,14 +11,17 @@ interface Props {
  * Swaps the locale prefix in the current path and navigates. Falls back to /.
  */
 export default function LangSwitcher({ current, other, otherLabel }: Props) {
-  const [href, setHref] = useState(`/${other}/`);
+  const initialBase = ((import.meta.env.BASE_URL as string) || "/").replace(/\/+$/, "");
+  const [href, setHref] = useState(`${initialBase}/${other}/`);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
-    const path = window.location.pathname;
-    const stripped = path.replace(new RegExp(`^/(en|ar)`), "");
+    const base = (import.meta.env.BASE_URL as string).replace(/\/+$/, "");
+    let path = window.location.pathname;
+    if (base && path.startsWith(base)) path = path.slice(base.length);
+    const stripped = path.replace(/^\/(en|ar)/, "");
     const sub = stripped.replace(/^\/+|\/+$/g, "");
-    setHref(sub ? `/${other}/${sub}/` : `/${other}/`);
+    setHref(sub ? `${base}/${other}/${sub}/` : `${base}/${other}/`);
   }, [other]);
 
   return (

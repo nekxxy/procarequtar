@@ -1,5 +1,5 @@
 ---
-import { t, tn, type Locale } from "../../i18n/utils";
+import { t, tn, localizedHref, type Locale } from "../../i18n/utils";
 import SplitText from "../react/SplitText.tsx";
 import HeroRotator from "../react/HeroRotator.tsx";
 import MagneticButton from "../react/MagneticButton.tsx";
@@ -48,10 +48,10 @@ const rotators = tn<string[]>(lang, "home.hero.headlineRotators");
       </p>
 
       <div class="flex flex-wrap items-center gap-4 pt-2">
-        <MagneticButton client:visible href={`/${lang}/contact/`} variant="solid">
+        <MagneticButton client:visible href={localizedHref("/contact", lang)} variant="solid">
           {t(lang, "home.hero.primaryCta")}
         </MagneticButton>
-        <MagneticButton client:visible href={`/${lang}/projects/`} variant="outline">
+        <MagneticButton client:visible href={localizedHref("/projects", lang)} variant="outline">
           {t(lang, "home.hero.secondaryCta")}
         </MagneticButton>
       </div>

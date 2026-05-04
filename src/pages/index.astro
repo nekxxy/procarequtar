@@ -1,4 +1,4 @@
 ---
-// Redirect root to default locale
-return Astro.redirect("/en/", 308);
+// Root → default locale. Honors astro.config.mjs `base` automatically.
+return Astro.redirect(`${import.meta.env.BASE_URL}en/`, 308);
 ---

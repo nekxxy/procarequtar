@@ -70,12 +70,15 @@ export default function MobileMenu({ lang, labels }: Props) {
     { href: localizedHref("/contact", lang), label: labels.contact },
   ];
 
+  const base = ((import.meta.env.BASE_URL as string) || "/").replace(/\/+$/, "");
   const otherSub = (() => {
     if (typeof window === "undefined") return "/";
-    const stripped = window.location.pathname.replace(/^\/(en|ar)/, "");
+    let path = window.location.pathname;
+    if (base && path.startsWith(base)) path = path.slice(base.length);
+    const stripped = path.replace(/^\/(en|ar)/, "");
     return stripped || "/";
   })();
-  const otherHref = `/${labels.other}${otherSub.startsWith("/") ? otherSub : `/${otherSub}`}`;
+  const otherHref = `${base}/${labels.other}${otherSub.startsWith("/") ? otherSub : `/${otherSub}`}`;
 
   return (
     <>

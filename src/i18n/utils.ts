@@ -8,12 +8,21 @@ export const defaultLocale: Locale = "en";
 export const dictionaries = { en, ar } as const;
 export type Dictionary = typeof en;
 
+/** Build-time base, e.g. "/procarequtar" or "" (no trailing slash). */
+const BASE = ((import.meta.env.BASE_URL as string) || "/").replace(/\/+$/, "");
+
 export function isLocale(value: string): value is Locale {
   return (locales as readonly string[]).includes(value);
 }
 
+/** Strip the configured base from a pathname, returning what follows. */
+function stripBase(path: string): string {
+  if (BASE && path.startsWith(BASE)) return path.slice(BASE.length) || "/";
+  return path;
+}
+
 export function getLangFromUrl(url: URL): Locale {
-  const seg = url.pathname.split("/").filter(Boolean)[0];
+  const seg = stripBase(url.pathname).split("/").filter(Boolean)[0];
   return seg && isLocale(seg) ? seg : defaultLocale;
 }
 
@@ -22,31 +31,31 @@ export function getDir(lang: Locale): "ltr" | "rtl" {
 }
 
 /**
- * Strips the locale prefix from a path, returning the canonical sub-path.
- * `/en/services/contact` → `/services/contact`
+ * Strips the locale (and base) prefix from a path, returning the canonical
+ * sub-path. `/procarequtar/en/services/contact` → `/services/contact`
  */
 export function stripLocale(path: string): string {
-  const parts = path.split("/").filter(Boolean);
+  const parts = stripBase(path).split("/").filter(Boolean);
   if (parts.length && isLocale(parts[0]!)) parts.shift();
   return "/" + parts.join("/");
 }
 
 /**
- * Returns the equivalent URL in the alternate locale.
+ * Returns the equivalent URL in the alternate locale, including base.
  */
 export function getAlternateUrl(url: URL, target: Locale): string {
   const sub = stripLocale(url.pathname);
   const trimmed = sub === "/" ? "" : sub.replace(/\/$/, "");
-  return `/${target}${trimmed}/`;
+  return `${BASE}/${target}${trimmed}/`;
 }
 
 /**
  * Build a localized href from a sub-path (no leading locale).
- * `localizedHref("/services", "ar")` → `/ar/services/`
+ * `localizedHref("/services", "ar")` → `/procarequtar/ar/services/`
  */
 export function localizedHref(sub: string, lang: Locale): string {
   const clean = sub.replace(/^\/+|\/+$/g, "");
-  return clean ? `/${lang}/${clean}/` : `/${lang}/`;
+  return clean ? `${BASE}/${lang}/${clean}/` : `${BASE}/${lang}/`;
 }
 
 /**

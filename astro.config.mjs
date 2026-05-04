@@ -5,7 +5,9 @@ import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
-  site: "https://www.procareqatar.com",
+  site: "https://nekxxy.github.io",
+  base: "/procarequtar",
+  trailingSlash: "always",
   integrations: [react(), sitemap()],
   vite: {
     plugins: [tailwindcss()],

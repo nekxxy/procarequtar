@@ -1,12 +1,15 @@
 ---
+import { getLangFromUrl, localizedHref } from "../../i18n/utils";
+
 interface Props {
   className?: string;
 }
 const { className } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
 ---
 
 <a
-  href={`/${(Astro.url.pathname.split("/").filter(Boolean)[0] ?? "en")}/`}
+  href={localizedHref("/", lang)}
   data-cursor-hover
   aria-label="Pro Care Qatar — home"
   class:list={["inline-flex items-center gap-2.5", className]}
