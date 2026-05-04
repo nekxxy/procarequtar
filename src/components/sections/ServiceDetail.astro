@@ -1,0 +1,119 @@
+---
+import {
+  t,
+  tn,
+  localizedHref,
+  SERVICE_SLUGS,
+  type Locale,
+  type ServiceSlug,
+} from "../../i18n/utils";
+import RevealOnScroll from "../react/RevealOnScroll.tsx";
+import MagneticButton from "../react/MagneticButton.tsx";
+
+interface Props {
+  lang: Locale;
+  slug: ServiceSlug;
+}
+const { lang, slug } = Astro.props;
+
+const code = tn<string>(lang, `services.list.${slug}.code`);
+const title = tn<string>(lang, `services.list.${slug}.title`);
+const tagline = tn<string>(lang, `services.list.${slug}.tagline`);
+const description = tn<string>(lang, `services.list.${slug}.description`);
+const scope = tn<string[]>(lang, `services.list.${slug}.scope`);
+
+const others = SERVICE_SLUGS.filter((s) => s !== slug).slice(0, 4);
+---
+
+<section
+  class="relative grid min-h-[80svh] place-items-end overflow-hidden bg-[var(--color-bg-dark)] text-[var(--color-fg-dark)]"
+  data-theme-section="dark"
+>
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_60%_at_85%_15%,var(--color-accent)/0.18,transparent_70%)]"
+  />
+  <div class="relative z-[2] mx-auto w-full max-w-[100rem] px-6 pb-16 pt-44 md:px-10 md:pb-24 md:pt-56">
+    <div class="flex items-center gap-4">
+      <a
+        href={localizedHref("/services", lang)}
+        data-cursor-hover
+        class="font-mono text-xs uppercase tracking-[0.2em] text-white/55 hover:text-[var(--color-accent)] transition-colors"
+      >
+        ← {t(lang, "nav.services")}
+      </a>
+      <span
+        class="rounded-full border border-white/15 px-3 py-1 font-mono text-[0.65rem] tracking-widest text-white/65"
+      >
+        C.R. CODE {code}
+      </span>
+    </div>
+    <h1 class="display mt-10 text-balance text-[clamp(2.75rem,9vw,8rem)] leading-[0.95]">
+      {title}
+    </h1>
+    <p class="mt-6 max-w-3xl text-xl text-white/70 md:text-2xl">{tagline}</p>
+  </div>
+</section>
+
+<section class="bg-[var(--color-bg)] text-[var(--color-fg)]" data-theme-section="light">
+  <div class="mx-auto grid max-w-[100rem] grid-cols-1 gap-12 px-6 py-24 md:grid-cols-12 md:gap-16 md:px-10 md:py-32">
+    <RevealOnScroll client:visible className="md:col-span-7 flex flex-col gap-6">
+      <span class="eyebrow">Scope</span>
+      <p class="text-lg text-[var(--fg)] md:text-xl">{description}</p>
+    </RevealOnScroll>
+    <RevealOnScroll client:visible className="md:col-span-5">
+      <ul class="grid grid-cols-1 gap-px rounded-[var(--radius-xl)] overflow-hidden border border-[color-mix(in_srgb,var(--fg)_10%,transparent)] bg-[color-mix(in_srgb,var(--fg)_8%,transparent)]">
+        {
+          scope.map((line, idx) => (
+            <li class="flex items-start gap-4 bg-[var(--color-bg)] px-6 py-5">
+              <span class="font-mono text-[0.65rem] uppercase tracking-[0.25em] text-[var(--muted)]">
+                {String(idx + 1).padStart(2, "0")}
+              </span>
+              <span class="text-base">{line}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </RevealOnScroll>
+  </div>
+</section>
+
+<section class="bg-[var(--color-bg)] text-[var(--color-fg)]">
+  <div class="mx-auto max-w-[100rem] px-6 pb-24 md:px-10 md:pb-32">
+    <h2 class="display mb-10 text-3xl md:text-4xl">
+      {t(lang, "nav.services")}
+    </h2>
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+      {
+        others.map((s) => (
+          <a
+            href={localizedHref(`/services/${s}`, lang)}
+            data-cursor-hover
+            class="group rounded-[var(--radius-lg)] border border-[color-mix(in_srgb,var(--fg)_10%,transparent)] p-6 transition-colors hover:border-[var(--color-accent)]"
+          >
+            <div class="mb-8 font-mono text-[0.65rem] uppercase tracking-[0.25em] text-[var(--muted)]">
+              {t(lang, `services.list.${s}.code`)}
+            </div>
+            <h3 class="display text-2xl">{t(lang, `services.list.${s}.title`)}</h3>
+            <p class="mt-2 text-sm text-[var(--muted)]">
+              {t(lang, `services.list.${s}.tagline`)}
+            </p>
+            <span class="mt-6 inline-flex items-center gap-2 text-sm text-[var(--color-accent)] transition-transform group-hover:translate-x-1 rtl:group-hover:-translate-x-1">
+              {t(lang, "home.projects.cta")} <span aria-hidden="true" class="rtl:rotate-180">→</span>
+            </span>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<section class="relative overflow-hidden bg-[var(--color-bg-dark)] text-[var(--color-fg-dark)]" data-theme-section="dark">
+  <div class="relative mx-auto flex max-w-[100rem] flex-col items-start gap-6 px-6 py-24 md:px-10 md:py-32">
+    <span class="eyebrow opacity-80">{t(lang, "home.cta.eyebrow")}</span>
+    <h2 class="display text-balance text-4xl md:text-5xl">{t(lang, "home.cta.title")}</h2>
+    <MagneticButton client:visible href={localizedHref("/contact", lang)} variant="solid">
+      {t(lang, "home.cta.button")}
+    </MagneticButton>
+  </div>
+</section>

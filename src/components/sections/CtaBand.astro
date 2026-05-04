@@ -1,0 +1,28 @@
+---
+import { t, localizedHref, type Locale } from "../../i18n/utils";
+import MagneticButton from "../react/MagneticButton.tsx";
+
+interface Props {
+  lang: Locale;
+}
+const { lang } = Astro.props;
+---
+
+<section class="relative overflow-hidden bg-[var(--color-bg-dark)] text-[var(--color-fg-dark)]" data-theme-section="dark">
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute inset-x-0 bottom-0 h-[34rem] bg-[radial-gradient(60%_60%_at_50%_100%,var(--color-accent)/0.18,transparent_70%)]"
+  />
+  <div class="relative mx-auto flex max-w-[100rem] flex-col items-start gap-8 px-6 py-28 md:items-center md:px-10 md:py-40 md:text-center">
+    <span class="eyebrow opacity-80">{t(lang, "home.cta.eyebrow")}</span>
+    <h2 class="display text-balance text-5xl md:text-6xl lg:text-7xl">
+      {t(lang, "home.cta.title")}
+    </h2>
+    <p class="max-w-xl text-lg text-white/65">
+      {t(lang, "home.cta.subtitle")}
+    </p>
+    <MagneticButton client:visible href={localizedHref("/contact", lang)} variant="solid">
+      {t(lang, "home.cta.button")}
+    </MagneticButton>
+  </div>
+</section>

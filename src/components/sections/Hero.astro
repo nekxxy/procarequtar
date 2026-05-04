@@ -1,0 +1,67 @@
+---
+import { t, tn, type Locale } from "../../i18n/utils";
+import SplitText from "../react/SplitText.tsx";
+import HeroRotator from "../react/HeroRotator.tsx";
+import MagneticButton from "../react/MagneticButton.tsx";
+
+interface Props {
+  lang: Locale;
+}
+const { lang } = Astro.props;
+const rotators = tn<string[]>(lang, "home.hero.headlineRotators");
+---
+
+<section
+  class="relative grid min-h-[100svh] place-items-end overflow-hidden bg-[var(--color-bg)] text-[var(--color-fg)] grain"
+  data-theme-section="light"
+>
+  <!-- Ambient gradient orbs -->
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute -top-40 -end-32 h-[34rem] w-[34rem] rounded-full bg-[radial-gradient(circle,var(--color-accent)_0%,transparent_60%)] opacity-30 blur-3xl"
+  >
+  </div>
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute -bottom-24 start-1/4 h-[28rem] w-[28rem] rounded-full bg-[radial-gradient(circle,var(--color-accent-3)_0%,transparent_60%)] opacity-20 blur-3xl"
+  >
+  </div>
+
+  <div class="relative z-[2] mx-auto w-full max-w-[100rem] px-6 pb-16 pt-36 md:px-10 md:pb-24 md:pt-44">
+    <div class="flex flex-col gap-10 md:gap-16">
+      <span class="eyebrow inline-flex items-center gap-3">
+        <span class="inline-block h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" aria-hidden="true" />
+        {t(lang, "home.hero.eyebrow")}
+      </span>
+
+      <h1 class="display text-balance text-[clamp(2.75rem,8.5vw,9rem)] leading-[0.95]">
+        <SplitText client:visible split="words" stagger={0.06}>
+          {t(lang, "home.hero.headlinePre")}
+        </SplitText>
+        <span class="block">
+          <HeroRotator client:visible words={rotators} />
+        </span>
+      </h1>
+
+      <p class="max-w-xl text-lg text-[var(--muted)] md:text-xl">
+        {t(lang, "home.hero.lead")}
+      </p>
+
+      <div class="flex flex-wrap items-center gap-4 pt-2">
+        <MagneticButton client:visible href={`/${lang}/contact/`} variant="solid">
+          {t(lang, "home.hero.primaryCta")}
+        </MagneticButton>
+        <MagneticButton client:visible href={`/${lang}/projects/`} variant="outline">
+          {t(lang, "home.hero.secondaryCta")}
+        </MagneticButton>
+      </div>
+    </div>
+
+    <div class="mt-20 flex items-center gap-4 md:mt-32">
+      <span class="font-mono text-[0.65rem] uppercase tracking-[0.3em] text-[var(--muted)]">
+        {t(lang, "home.hero.scrollHint")}
+      </span>
+      <span aria-hidden="true" class="h-px w-16 bg-[color-mix(in_srgb,var(--fg)_20%,transparent)]"></span>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,54 @@
+---
+import { t, tn, type Locale, SERVICE_SLUGS } from "../../i18n/utils";
+import ProjectsGrid from "../react/ProjectsGrid.tsx";
+
+interface Props {
+  lang: Locale;
+}
+const { lang } = Astro.props;
+
+interface RawProject {
+  title: string;
+  service: string;
+  year: string;
+}
+const raw = tn<RawProject[]>(lang, "projects.items");
+
+const items = raw.map((p) => ({
+  title: p.title,
+  service: p.service,
+  serviceLabel: tn<string>(lang, `services.list.${p.service}.title`),
+  year: p.year,
+}));
+
+const filters = SERVICE_SLUGS.map((s) => ({
+  value: s,
+  label: tn<string>(lang, `services.list.${s}.title`),
+}));
+---
+
+<section class="bg-[var(--color-bg)] text-[var(--color-fg)] grain relative" data-theme-section="light">
+  <div class="mx-auto max-w-[100rem] px-6 pb-12 pt-44 md:px-10 md:pb-20 md:pt-56">
+    <span class="eyebrow inline-flex items-center gap-3">
+      <span class="inline-block h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" aria-hidden="true"></span>
+      {t(lang, "nav.projects")}
+    </span>
+    <h1 class="display mt-6 text-balance text-[clamp(2.75rem,8vw,7rem)] leading-[0.95]">
+      {t(lang, "projects.title")}
+    </h1>
+    <p class="mt-8 max-w-2xl text-lg text-[var(--muted)]">
+      {t(lang, "projects.subtitle")}
+    </p>
+  </div>
+</section>
+
+<section class="bg-[var(--color-bg)] text-[var(--color-fg)]">
+  <div class="mx-auto max-w-[100rem] px-6 pb-32 md:px-10 md:pb-44">
+    <ProjectsGrid
+      client:load
+      items={items}
+      filters={filters}
+      allLabel={t(lang, "projects.filterAll")}
+    />
+  </div>
+</section>

@@ -1,0 +1,12 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import ServiceDetail from "../../../components/sections/ServiceDetail.astro";
+import { tn } from "../../../i18n/utils";
+---
+
+<BaseLayout
+  lang="en"
+  title={`${tn<string>("en", "services.list.building-materials.title")} — Pro Care Qatar`}
+>
+  <ServiceDetail lang="en" slug="building-materials" />
+</BaseLayout>

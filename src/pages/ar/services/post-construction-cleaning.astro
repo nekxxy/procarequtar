@@ -1,0 +1,12 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import ServiceDetail from "../../../components/sections/ServiceDetail.astro";
+import { tn } from "../../../i18n/utils";
+---
+
+<BaseLayout
+  lang="ar"
+  title={`${tn<string>("ar", "services.list.post-construction-cleaning.title")} — برو كير قطر`}
+>
+  <ServiceDetail lang="ar" slug="post-construction-cleaning" />
+</BaseLayout>

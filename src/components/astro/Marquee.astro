@@ -1,0 +1,70 @@
+---
+interface Props {
+  items: string[];
+  speed?: number; // seconds per loop
+  separator?: string;
+  className?: string;
+  variant?: "default" | "accent";
+}
+const {
+  items,
+  speed = 30,
+  separator = "✦",
+  className,
+  variant = "default",
+} = Astro.props;
+const repeated = [...items, ...items];
+---
+
+<div
+  class:list={[
+    "marquee relative flex w-full overflow-hidden border-y",
+    variant === "accent"
+      ? "border-[var(--color-accent)]/40 bg-[var(--color-accent)] text-black"
+      : "border-[color-mix(in_srgb,var(--fg)_12%,transparent)] bg-transparent text-[var(--fg)]",
+    className,
+  ]}
+  style={`--marquee-duration: ${speed}s;`}
+>
+  {
+    [0, 1].map(() => (
+      <div
+        class="marquee-track flex shrink-0 items-center gap-8 py-5 ps-8 font-mono text-xs uppercase tracking-[0.3em] md:py-6 md:text-sm"
+        aria-hidden={true}
+      >
+        {repeated.map((item) => (
+          <span class="flex items-center gap-8">
+            <span>{item}</span>
+            <span aria-hidden="true" class="opacity-60">{separator}</span>
+          </span>
+        ))}
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  .marquee-track {
+    animation: marquee var(--marquee-duration) linear infinite;
+    will-change: transform;
+  }
+  :global([dir="rtl"]) .marquee-track {
+    animation-direction: reverse;
+  }
+  .marquee:hover .marquee-track {
+    animation-play-state: paused;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track {
+      animation: none;
+    }
+  }
+</style>

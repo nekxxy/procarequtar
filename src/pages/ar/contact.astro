@@ -1,0 +1,9 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ContactContent from "../../components/sections/ContactContent.astro";
+import { t } from "../../i18n/utils";
+---
+
+<BaseLayout lang="ar" title={`${t("ar", "contact.title")} — برو كير قطر`}>
+  <ContactContent lang="ar" />
+</BaseLayout>

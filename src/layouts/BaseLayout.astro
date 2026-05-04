@@ -1,0 +1,73 @@
+---
+import "../styles/global.css";
+import { ClientRouter } from "astro:transitions";
+import {
+  getLangFromUrl,
+  getDir,
+  t,
+  type Locale,
+} from "../i18n/utils";
+import SmoothScroll from "../components/react/SmoothScroll";
+import Cursor from "../components/react/Cursor";
+import Preloader from "../components/react/Preloader";
+import Header from "../components/astro/Header.astro";
+import Footer from "../components/astro/Footer.astro";
+
+interface Props {
+  title?: string;
+  description?: string;
+  theme?: "light" | "dark";
+  /** Override locale (used by /index.astro language redirect) */
+  lang?: Locale;
+}
+
+const lang = (Astro.props.lang ?? getLangFromUrl(Astro.url)) as Locale;
+const dir = getDir(lang);
+const title = Astro.props.title ?? t(lang, "meta.title");
+const description = Astro.props.description ?? t(lang, "meta.description");
+const theme = Astro.props.theme ?? "light";
+const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+const otherLocale = lang === "en" ? "ar" : "en";
+---
+
+<!doctype html>
+<html lang={lang} dir={dir} data-theme={theme}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="alternate" hreflang="en" href={`/en${Astro.url.pathname.replace(/^\/(en|ar)/, "")}`} />
+    <link rel="alternate" hreflang="ar" href={`/ar${Astro.url.pathname.replace(/^\/(en|ar)/, "")}`} />
+    <link rel="alternate" hreflang="x-default" href="/en/" />
+    <meta property="og:title" content={t(lang, "meta.ogTitle")} />
+    <meta property="og:description" content={t(lang, "meta.ogDescription")} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta name="theme-color" content={theme === "dark" ? "#0b0b0a" : "#f4f1ec"} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <ClientRouter fallback="swap" />
+  </head>
+  <body class="min-h-svh antialiased">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:start-3 focus:z-50 focus:rounded focus:bg-[var(--color-accent)] focus:px-3 focus:py-2 focus:text-black"
+      >{t(lang, "nav.skipToContent")}</a
+    >
+
+    <SmoothScroll client:load />
+    <Preloader lang={lang} client:load />
+    <Cursor client:idle />
+
+    <Header lang={lang} otherLocale={otherLocale} />
+
+    <main id="main" data-lang={lang}>
+      <slot />
+    </main>
+
+    <Footer lang={lang} />
+  </body>
+</html>

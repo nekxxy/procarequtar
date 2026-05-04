@@ -1,0 +1,209 @@
+{
+  "meta": {
+    "title": "Pro Care Qatar — Construction, Facility & Pest Care",
+    "description": "Pro Care Trading Contracting and Facility Services. End-to-end construction, post-construction cleaning, building materials, facility maintenance and pest control across Qatar.",
+    "ogTitle": "Pro Care Qatar",
+    "ogDescription": "Construction. Cleaning. Materials. Maintenance. Pest control. Engineered for Qatar.",
+    "company": "Pro Care Trading Contracting and Facility Services",
+    "registry": "C.R. 217949"
+  },
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "projects": "Projects",
+    "about": "About",
+    "contact": "Contact",
+    "menu": "Menu",
+    "close": "Close",
+    "language": "Language",
+    "skipToContent": "Skip to content"
+  },
+  "lang": {
+    "en": "English",
+    "ar": "العربية",
+    "switch": "Switch language"
+  },
+  "home": {
+    "hero": {
+      "eyebrow": "Doha · Qatar · Est. 2021",
+      "headlinePre": "Engineered care for",
+      "headlineRotators": ["buildings.", "facilities.", "interiors.", "spaces."],
+      "lead": "From foundation to fumigation — five disciplines, one accountable team. Pro Care delivers contracting, post-construction cleaning, building materials, facility maintenance and pest control across Qatar.",
+      "primaryCta": "Request a quote",
+      "secondaryCta": "See our work",
+      "scrollHint": "Scroll"
+    },
+    "trust": {
+      "items": [
+        "C.R. 217949",
+        "Five licensed activities",
+        "ISO-aligned process",
+        "Doha-based",
+        "Bilingual delivery",
+        "24/7 dispatch"
+      ]
+    },
+    "services": {
+      "eyebrow": "What we do",
+      "title": "Five disciplines, executed to spec.",
+      "subtitle": "Each service is licensed under our Qatar Ministry of Commerce registry and run by a dedicated team lead.",
+      "cta": "Explore all services"
+    },
+    "projects": {
+      "eyebrow": "Selected projects",
+      "title": "Recent work across Doha.",
+      "subtitle": "Commercial fit-outs, residential towers, post-handover deep cleans and ongoing FM contracts.",
+      "cta": "View the gallery"
+    },
+    "stats": {
+      "eyebrow": "By the numbers",
+      "items": [
+        { "value": 120, "suffix": "+", "label": "Sites delivered" },
+        { "value": 48, "suffix": "h", "label": "Average response" },
+        { "value": 5, "suffix": "", "label": "Licensed activities" },
+        { "value": 99, "suffix": "%", "label": "Client retention" }
+      ]
+    },
+    "about": {
+      "eyebrow": "About Pro Care",
+      "title": "One operator. Five disciplines. Zero hand-offs.",
+      "body": "Most Qatar contractors sub-contract everything past their core trade. Pro Care holds licenses across construction, cleaning, materials, FM and pest control — so a single point of contact runs your project from breaking ground to handover and beyond.",
+      "cta": "Read our story"
+    },
+    "cta": {
+      "eyebrow": "Get in touch",
+      "title": "Tell us about your site.",
+      "subtitle": "Quote within one business day.",
+      "button": "Start a project"
+    }
+  },
+  "services": {
+    "title": "Services",
+    "subtitle": "Five licensed disciplines under one accountable operator.",
+    "list": {
+      "construction": {
+        "code": "410029",
+        "title": "Construction",
+        "tagline": "Non-residential builds, fit-outs and refurbishments.",
+        "description": "Ground-up construction and full interior fit-outs for commercial, retail, hospitality and industrial spaces. Project management, MEP coordination, snag-list close-out.",
+        "scope": [
+          "Ground-up commercial buildings",
+          "Office and retail fit-outs",
+          "Renovation and refurbishment",
+          "MEP coordination",
+          "Snag list and close-out",
+          "Handover documentation"
+        ]
+      },
+      "post-construction-cleaning": {
+        "code": "433091",
+        "title": "Post-construction cleaning",
+        "tagline": "Hand-over ready, every time.",
+        "description": "Three-stage post-construction cleaning: rough, detail and final. Concrete dust removal, glass and frame polish, HVAC vent decontamination, floor sealing.",
+        "scope": [
+          "Rough → detail → final stages",
+          "Concrete dust extraction",
+          "Glass, frame and façade polish",
+          "HVAC vent decontamination",
+          "Floor stripping and sealing",
+          "Handover walkthrough"
+        ]
+      },
+      "building-materials": {
+        "code": "475281",
+        "title": "Building materials",
+        "tagline": "Cement, blocks, plaster, tiles — sourced and delivered.",
+        "description": "Direct-from-source building materials retail with site delivery across Qatar. Trade pricing for repeat contractors, mixed-load tolerance, same-day dispatch on stocked SKUs.",
+        "scope": [
+          "Cement (OPC, SRC, white)",
+          "Hollow and solid blocks",
+          "Plaster and gypsum boards",
+          "Cement and ceramic tiles",
+          "Aggregates and sand",
+          "Site delivery, mixed loads"
+        ]
+      },
+      "facility-maintenance": {
+        "code": "811003",
+        "title": "Facility maintenance",
+        "tagline": "Hard FM, soft FM, run on SLAs.",
+        "description": "Integrated facility management: HVAC, electrical, plumbing, civil, housekeeping, landscaping. SLA-backed reactive and PPM contracts for towers, malls, schools and labour camps.",
+        "scope": [
+          "HVAC, electrical, plumbing, civil",
+          "PPM and reactive maintenance",
+          "Housekeeping and waste",
+          "Landscaping and pool care",
+          "Helpdesk and CAFM reporting",
+          "24/7 dispatch"
+        ]
+      },
+      "pest-control": {
+        "code": "812904",
+        "title": "Pest control",
+        "tagline": "Disinfection, fumigation, rodent control.",
+        "description": "MOPH-aligned disinfection and pest management. Cockroaches, rodents, bed bugs, termites, mosquitoes — discreet residential and overnight commercial schedules.",
+        "scope": [
+          "General disinfection (food-safe)",
+          "Cockroach and ant programmes",
+          "Rodent baiting and exclusion",
+          "Bed bug heat / chemical",
+          "Termite pre/post-construction",
+          "Mosquito fogging"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "title": "Projects",
+    "subtitle": "A snapshot of recent contracts across Doha and the wider Qatar market.",
+    "filterAll": "All",
+    "items": [
+      { "title": "Lusail Tower fit-out", "service": "construction", "year": "2025" },
+      { "title": "West Bay handover clean", "service": "post-construction-cleaning", "year": "2025" },
+      { "title": "Industrial Area materials supply", "service": "building-materials", "year": "2025" },
+      { "title": "Education City FM contract", "service": "facility-maintenance", "year": "2024" },
+      { "title": "Al Sadd residential pest cycle", "service": "pest-control", "year": "2024" },
+      { "title": "Msheireb retail refurbishment", "service": "construction", "year": "2024" },
+      { "title": "The Pearl tower deep clean", "service": "post-construction-cleaning", "year": "2024" },
+      { "title": "Doha Hilton labour camp FM", "service": "facility-maintenance", "year": "2023" }
+    ]
+  },
+  "about": {
+    "title": "About Pro Care",
+    "lead": "Pro Care Trading Contracting and Facility Services is a Qatar-licensed operator running five disciplines under one roof — so the handover from build to clean to maintain happens without a sub-contract chain.",
+    "story": "Founded in Doha and registered under Commercial Registry 217949, Pro Care is built around a simple thesis: most Qatar projects lose weeks at the seams between contractors. By holding licenses across construction (410029), post-construction cleaning (433091), building materials retail (475281), facility maintenance (811003) and pest control (812904), we collapse those seams into a single accountable team.",
+    "values": [
+      { "title": "Single point of accountability", "body": "One project lead from kick-off to year-three FM. No sub-contract finger-pointing." },
+      { "title": "Bilingual delivery", "body": "Every site report, drawing markup and SLA review issued in English and Arabic." },
+      { "title": "Documented handover", "body": "Every project closes with a signed handover pack — drawings, warranties, MSDS, contact tree." },
+      { "title": "Local sourcing", "body": "Materials sourced through our retail license keep margin and lead-time inside the country." }
+    ],
+    "registryLabel": "Commercial Registry",
+    "registryNumber": "217949",
+    "capitalLabel": "Capital",
+    "capitalValue": "QAR 100,000",
+    "expiryLabel": "Registry expiry",
+    "expiryValue": "25 / 05 / 2026"
+  },
+  "contact": {
+    "title": "Start a project",
+    "lead": "Tell us where the site is, what stage you're at, and what discipline you need. Quote back within one business day.",
+    "name": "Full name",
+    "company": "Company",
+    "email": "Email",
+    "phone": "Phone",
+    "service": "Service needed",
+    "selectService": "Select a service",
+    "message": "Project brief",
+    "submit": "Send enquiry",
+    "address": "Doha, State of Qatar",
+    "phoneLabel": "Phone",
+    "emailLabel": "Email",
+    "whatsappLabel": "WhatsApp"
+  },
+  "footer": {
+    "tagline": "Engineered care for buildings, facilities and the people inside them.",
+    "rights": "© 2026 Pro Care Trading Contracting and Facility Services.",
+    "registry": "C.R. 217949 · Doha · Qatar"
+  }
+}

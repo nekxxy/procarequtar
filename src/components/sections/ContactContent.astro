@@ -1,0 +1,86 @@
+---
+import { t, tn, SERVICE_SLUGS, type Locale } from "../../i18n/utils";
+import ContactForm from "../react/ContactForm.tsx";
+import RevealOnScroll from "../react/RevealOnScroll.tsx";
+
+interface Props {
+  lang: Locale;
+}
+const { lang } = Astro.props;
+
+const services = SERVICE_SLUGS.map((slug) => ({
+  slug,
+  title: tn<string>(lang, `services.list.${slug}.title`),
+}));
+---
+
+<section class="bg-[var(--color-bg)] text-[var(--color-fg)] grain relative" data-theme-section="light">
+  <div class="mx-auto grid max-w-[100rem] grid-cols-1 gap-12 px-6 pb-12 pt-44 md:grid-cols-12 md:gap-16 md:px-10 md:pb-20 md:pt-56">
+    <div class="md:col-span-5">
+      <span class="eyebrow inline-flex items-center gap-3">
+        <span class="inline-block h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" aria-hidden="true"></span>
+        {t(lang, "nav.contact")}
+      </span>
+    </div>
+    <div class="md:col-span-7 flex flex-col gap-6">
+      <h1 class="display text-balance text-[clamp(2.5rem,7vw,6rem)] leading-[0.96]">
+        {t(lang, "contact.title")}
+      </h1>
+      <p class="max-w-2xl text-lg text-[var(--muted)]">{t(lang, "contact.lead")}</p>
+    </div>
+  </div>
+</section>
+
+<section class="bg-[var(--color-bg)] text-[var(--color-fg)]">
+  <div class="mx-auto grid max-w-[100rem] grid-cols-1 gap-12 px-6 pb-24 md:grid-cols-12 md:gap-16 md:px-10 md:pb-32">
+    <RevealOnScroll client:visible className="md:col-span-5 flex flex-col gap-8">
+      <div>
+        <div class="font-mono text-[0.65rem] uppercase tracking-[0.25em] text-[var(--muted)]">
+          {t(lang, "contact.address")}
+        </div>
+        <div class="mt-2 text-lg">Doha, State of Qatar</div>
+      </div>
+      <div>
+        <div class="font-mono text-[0.65rem] uppercase tracking-[0.25em] text-[var(--muted)]">
+          {t(lang, "contact.phoneLabel")}
+        </div>
+        <a href="tel:+97400000000" class="mt-2 block text-lg hover:text-[var(--color-accent)] transition-colors">
+          +974 0000 0000
+        </a>
+      </div>
+      <div>
+        <div class="font-mono text-[0.65rem] uppercase tracking-[0.25em] text-[var(--muted)]">
+          {t(lang, "contact.emailLabel")}
+        </div>
+        <a href="mailto:hello@procareqatar.com" class="mt-2 block text-lg hover:text-[var(--color-accent)] transition-colors">
+          hello@procareqatar.com
+        </a>
+      </div>
+      <div>
+        <div class="font-mono text-[0.65rem] uppercase tracking-[0.25em] text-[var(--muted)]">
+          {t(lang, "contact.whatsappLabel")}
+        </div>
+        <a href="https://wa.me/97400000000" class="mt-2 block text-lg hover:text-[var(--color-accent)] transition-colors">
+          +974 0000 0000
+        </a>
+      </div>
+    </RevealOnScroll>
+    <div class="md:col-span-7">
+      <ContactForm
+        client:load
+        lang={lang}
+        labels={{
+          name: t(lang, "contact.name"),
+          company: t(lang, "contact.company"),
+          email: t(lang, "contact.email"),
+          phone: t(lang, "contact.phone"),
+          service: t(lang, "contact.service"),
+          selectService: t(lang, "contact.selectService"),
+          message: t(lang, "contact.message"),
+          submit: t(lang, "contact.submit"),
+        }}
+        services={services}
+      />
+    </div>
+  </div>
+</section>

@@ -1,0 +1,82 @@
+---
+import { localizedHref, t, type Locale } from "../../i18n/utils";
+import LangSwitcher from "../react/LangSwitcher.tsx";
+import MobileMenu from "../react/MobileMenu.tsx";
+import Logo from "./Logo.astro";
+
+interface Props {
+  lang: Locale;
+  otherLocale: Locale;
+}
+
+const { lang, otherLocale } = Astro.props;
+const otherLabel = lang === "en" ? "العربية" : "English";
+
+const links = [
+  { href: localizedHref("/services", lang), label: t(lang, "nav.services") },
+  { href: localizedHref("/projects", lang), label: t(lang, "nav.projects") },
+  { href: localizedHref("/about", lang), label: t(lang, "nav.about") },
+  { href: localizedHref("/contact", lang), label: t(lang, "nav.contact") },
+];
+---
+
+<header
+  class="fixed inset-x-0 top-0 z-30 px-5 py-4 md:px-8 md:py-6"
+  data-header
+>
+  <div class="glass mx-auto flex max-w-[100rem] items-center justify-between rounded-full px-5 py-2 md:px-7 md:py-2.5">
+    <Logo className="text-[var(--fg)]" />
+
+    <nav
+      aria-label="Primary"
+      class="hidden md:flex items-center gap-7 text-sm"
+    >
+      {
+        links.map((l) => (
+          <a
+            href={l.href}
+            data-cursor-hover
+            class="text-[var(--fg)]/85 hover:text-[var(--color-accent)] transition-colors"
+          >
+            {l.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="flex items-center gap-4">
+      <LangSwitcher
+        client:load
+        current={lang}
+        other={otherLocale}
+        otherLabel={otherLabel}
+      />
+
+      <a
+        href={localizedHref("/contact", lang)}
+        data-cursor-hover
+        class="hidden md:inline-flex items-center gap-2 rounded-full bg-[var(--fg)] px-4 py-2 text-xs font-medium text-[var(--bg)] hover:bg-[var(--color-accent)] hover:text-black transition-colors"
+      >
+        {t(lang, "home.cta.button")}
+        <span aria-hidden="true" class="rtl:rotate-180">→</span>
+      </a>
+
+      <MobileMenu
+        client:load
+        lang={lang}
+        labels={{
+          menu: t(lang, "nav.menu"),
+          close: t(lang, "nav.close"),
+          home: t(lang, "nav.home"),
+          services: t(lang, "nav.services"),
+          projects: t(lang, "nav.projects"),
+          about: t(lang, "nav.about"),
+          contact: t(lang, "nav.contact"),
+          language: t(lang, "nav.language"),
+          other: otherLocale,
+          otherLabel,
+        }}
+      />
+    </div>
+  </div>
+</header>

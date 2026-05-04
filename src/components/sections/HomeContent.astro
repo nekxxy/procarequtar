@@ -1,0 +1,33 @@
+---
+import { tn, type Locale } from "../../i18n/utils";
+import Hero from "./Hero.astro";
+import ServicesShowcase from "./ServicesShowcase.astro";
+import ProjectsTeaser from "./ProjectsTeaser.astro";
+import StatsBand from "./StatsBand.astro";
+import AboutTeaser from "./AboutTeaser.astro";
+import CtaBand from "./CtaBand.astro";
+import Marquee from "../astro/Marquee.astro";
+import ThemeMorph from "../react/ThemeMorph.tsx";
+
+interface Props {
+  lang: Locale;
+}
+const { lang } = Astro.props;
+const trust = tn<string[]>(lang, "home.trust.items");
+---
+
+<ThemeMorph client:idle />
+
+<Hero lang={lang} />
+
+<Marquee items={trust} speed={45} />
+
+<ServicesShowcase lang={lang} />
+
+<ProjectsTeaser lang={lang} />
+
+<StatsBand lang={lang} />
+
+<AboutTeaser lang={lang} />
+
+<CtaBand lang={lang} />

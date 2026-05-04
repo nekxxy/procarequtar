@@ -1,0 +1,47 @@
+---
+interface Props {
+  eyebrow?: string;
+  title: string;
+  subtitle?: string;
+  align?: "start" | "center";
+  level?: 2 | 3;
+  className?: string;
+}
+const {
+  eyebrow,
+  title,
+  subtitle,
+  align = "start",
+  level = 2,
+  className,
+} = Astro.props;
+const Tag = level === 2 ? "h2" : "h3";
+---
+
+<header
+  class:list={[
+    "flex flex-col gap-4",
+    align === "center" ? "items-center text-center" : "items-start",
+    className,
+  ]}
+>
+  {
+    eyebrow && (
+      <span class="eyebrow inline-flex items-center gap-2">
+        <span
+          class="inline-block h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]"
+          aria-hidden="true"
+        />
+        {eyebrow}
+      </span>
+    )
+  }
+  <Tag class="display text-balance text-4xl md:text-5xl lg:text-6xl">{title}</Tag>
+  {
+    subtitle && (
+      <p class="max-w-2xl text-lg text-[var(--muted)] text-pretty">
+        {subtitle}
+      </p>
+    )
+  }
+</header>
