@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { useGsap } from "../../hooks/useGsap";
 import { useDirection } from "../../hooks/useDirection";
+import { useTiltAll } from "../../hooks/useTiltAll";
 import { gsap, ScrollTrigger } from "../../lib/gsap";
 import {
   localizedHref,
@@ -31,6 +32,8 @@ export default function HorizontalServices({ cards, lang, ctaLabel }: Props) {
   const sectionRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const { sign } = useDirection();
+
+  useTiltAll(trackRef, "[data-cursor-hover]", { max: 5, scale: 1.01 });
 
   useGsap(sectionRef, () => {
     if (!sectionRef.current || !trackRef.current) return;
@@ -79,6 +82,7 @@ export default function HorizontalServices({ cards, lang, ctaLabel }: Props) {
               key={card.slug}
               href={localizedHref(`/services/${card.slug}`, lang)}
               data-cursor-hover
+              data-cursor-label="Explore"
               className="group relative flex w-[88vw] shrink-0 flex-col justify-between overflow-hidden rounded-[var(--radius-2xl)] border border-white/10 bg-gradient-to-br from-white/[0.04] to-white/[0.01] p-8 transition-colors hover:border-[var(--color-accent)]/60 md:w-[44vw] md:p-10 lg:w-[34vw] lg:min-h-[64vh]"
             >
               <div className="flex items-start justify-between">

@@ -1,5 +1,6 @@
 import { useMemo, useState, useRef } from "react";
 import { useGsap } from "../../hooks/useGsap";
+import { useTiltAll } from "../../hooks/useTiltAll";
 import { gsap, ScrollTrigger } from "../../lib/gsap";
 import ProjectScene from "./ProjectScene";
 import type { ServiceSlug } from "../../i18n/utils";
@@ -50,6 +51,9 @@ export default function ProjectsGrid({ items, filters, allLabel }: Props) {
     });
   }, [active]);
 
+  // 3D tilt on every card
+  useTiltAll(ref, "[data-project]", { max: 7, scale: 1.015 });
+
   return (
     <div>
       <div className="mb-10 flex flex-wrap gap-2">
@@ -91,6 +95,7 @@ export default function ProjectsGrid({ items, filters, allLabel }: Props) {
             key={p.title}
             data-project
             data-cursor-hover
+            data-cursor-label="View"
             className="group relative aspect-[4/5] overflow-hidden rounded-[var(--radius-lg)] border border-[color-mix(in_srgb,var(--fg)_10%,transparent)] bg-[color-mix(in_srgb,var(--fg)_4%,transparent)] transition-colors hover:border-[var(--color-accent)]"
           >
             <div
