@@ -16,18 +16,22 @@ export default function DohaSkyline() {
     if (!root) return;
 
     const draws = root.querySelectorAll<SVGGeometryElement>("[data-draw]");
-    draws.forEach((el) => {
-      const len = el.getTotalLength();
-      el.setAttribute("stroke-dasharray", String(len));
-      el.setAttribute("stroke-dashoffset", String(len));
-    });
+    requestAnimationFrame(() => {
+      draws.forEach((el) => {
+        const len = el.getTotalLength?.() ?? 0;
+        if (len > 0) {
+          el.setAttribute("stroke-dasharray", String(len));
+          el.setAttribute("stroke-dashoffset", String(len));
+        }
+      });
 
-    gsap.to(draws, {
-      strokeDashoffset: 0,
-      duration: 1.6,
-      stagger: 0.04,
-      ease: "expo.out",
-      scrollTrigger: { trigger: root, start: "top 88%", once: true },
+      gsap.to(draws, {
+        strokeDashoffset: 0,
+        duration: 1.6,
+        stagger: 0.04,
+        ease: "expo.out",
+        scrollTrigger: { trigger: root, start: "top 88%", once: true },
+      });
     });
 
     // Aviation lights blink

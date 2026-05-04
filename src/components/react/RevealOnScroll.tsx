@@ -1,9 +1,8 @@
-import { useRef, type ReactNode, type ElementType } from "react";
+import { useRef, type ReactNode } from "react";
 import { useGsap } from "../../hooks/useGsap";
 import { gsap, ScrollTrigger } from "../../lib/gsap";
 
 interface Props {
-  as?: ElementType;
   className?: string;
   /** CSS selector inside the wrapper to stagger. Defaults to direct children. */
   childSelector?: string;
@@ -16,7 +15,6 @@ interface Props {
 }
 
 export default function RevealOnScroll({
-  as: Tag = "div",
   className,
   childSelector,
   delay = 0,
@@ -26,7 +24,7 @@ export default function RevealOnScroll({
   start = "top 85%",
   children,
 }: Props) {
-  const ref = useRef<HTMLElement>(null);
+  const ref = useRef<HTMLDivElement>(null);
 
   useGsap(ref, () => {
     const root = ref.current;
@@ -55,8 +53,8 @@ export default function RevealOnScroll({
   }, []);
 
   return (
-    <Tag ref={ref as never} className={className}>
+    <div ref={ref} className={className}>
       {children}
-    </Tag>
+    </div>
   );
 }

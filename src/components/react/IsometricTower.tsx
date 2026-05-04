@@ -38,14 +38,18 @@ export default function IsometricTower() {
     if (!svg) return;
     const root = svg as unknown as Element;
 
-    // Prep stroke-dasharray on every drawable edge so we can animate it
+    // Prep stroke-dasharray on every drawable edge so we can animate it.
+    // Defer to next frame so getTotalLength returns the actual length once
+    // layout has settled — on mobile this can be 0 if read synchronously.
     const edges = root.querySelectorAll<SVGPathElement | SVGLineElement>(
       "[data-edge]",
     );
     edges.forEach((edge) => {
-      const len = (edge as SVGGeometryElement).getTotalLength();
-      edge.setAttribute("stroke-dasharray", String(len));
-      edge.setAttribute("stroke-dashoffset", String(len));
+      const len = (edge as SVGGeometryElement).getTotalLength?.() ?? 0;
+      if (len > 0) {
+        edge.setAttribute("stroke-dasharray", String(len));
+        edge.setAttribute("stroke-dashoffset", String(len));
+      }
     });
 
     // Sequenced reveal: ground → floors → crane → annotations

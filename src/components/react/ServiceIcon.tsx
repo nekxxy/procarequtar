@@ -24,16 +24,20 @@ export default function ServiceIcon({ slug, className }: Props) {
     if (!root) return;
 
     const draw = root.querySelectorAll<SVGGeometryElement>("[data-draw]");
-    draw.forEach((el) => {
-      const len = el.getTotalLength();
-      el.setAttribute("stroke-dasharray", String(len));
-      el.setAttribute("stroke-dashoffset", String(len));
-    });
-    gsap.to(draw, {
-      strokeDashoffset: 0,
-      duration: 1.2,
-      stagger: 0.08,
-      ease: "expo.out",
+    requestAnimationFrame(() => {
+      draw.forEach((el) => {
+        const len = el.getTotalLength?.() ?? 0;
+        if (len > 0) {
+          el.setAttribute("stroke-dasharray", String(len));
+          el.setAttribute("stroke-dashoffset", String(len));
+        }
+      });
+      gsap.to(draw, {
+        strokeDashoffset: 0,
+        duration: 1.2,
+        stagger: 0.08,
+        ease: "expo.out",
+      });
     });
 
     // Per-slug idle animation

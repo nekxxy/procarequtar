@@ -1,10 +1,9 @@
-import { useRef, type ElementType, type ReactNode } from "react";
+import { useRef, type ReactNode } from "react";
 import { useGsap } from "../../hooks/useGsap";
 import { gsap, ScrollTrigger } from "../../lib/gsap";
 import { duration, stagger as st } from "../../lib/motion";
 
 interface Props {
-  as?: ElementType;
   className?: string;
   /** Starting state — defaults to entering from below. */
   from?: { y?: number; rotate?: number; opacity?: number };
@@ -22,7 +21,6 @@ interface Props {
 }
 
 export default function SplitText({
-  as: Tag = "span",
   className,
   from = { y: 60, opacity: 0 },
   stagger = st.tight,
@@ -32,7 +30,7 @@ export default function SplitText({
   split = "chars",
   children,
 }: Props) {
-  const ref = useRef<HTMLElement>(null);
+  const ref = useRef<HTMLSpanElement>(null);
 
   useGsap(ref, () => {
     const root = ref.current;
@@ -85,8 +83,12 @@ export default function SplitText({
   }, []);
 
   return (
-    <Tag ref={ref as never} className={className} aria-label={typeof children === "string" ? children : undefined}>
+    <span
+      ref={ref}
+      className={className}
+      aria-label={typeof children === "string" ? children : undefined}
+    >
       {children}
-    </Tag>
+    </span>
   );
 }

@@ -1,6 +1,7 @@
 ---
 import { t, tn, SERVICE_SLUGS, type Locale } from "../../i18n/utils";
 import HorizontalServices from "../react/HorizontalServices.tsx";
+import ServicesOrb3D from "../react/ServicesOrb3D.tsx";
 import SectionHeading from "../astro/SectionHeading.astro";
 
 interface Props {
@@ -25,6 +26,16 @@ const cards = SERVICE_SLUGS.map((slug, idx) => ({
       subtitle={t(lang, "home.services.subtitle")}
     />
   </div>
+</section>
+
+<!-- 3D services orb spanning full width before the horizontal scroll -->
+<section class="relative overflow-hidden bg-[var(--color-bg-dark)]" data-theme-section="dark">
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_60%_at_50%_50%,var(--color-accent)/0.15,transparent_70%)]"
+  >
+  </div>
+  <ServicesOrb3D client:visible />
 </section>
 
 <HorizontalServices

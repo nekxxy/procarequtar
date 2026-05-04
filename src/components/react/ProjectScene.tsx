@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { useGsap } from "../../hooks/useGsap";
 import { gsap } from "../../lib/gsap";
 import type { ServiceSlug } from "../../i18n/utils";
+import { cn } from "../../lib/cn";
 
 interface Props {
   slug: ServiceSlug;
@@ -27,19 +28,25 @@ export default function ProjectScene({ slug, className, seed = 0 }: Props) {
     const root = ref.current;
     if (!root) return;
 
+    // Defer dasharray prep until layout has settled, otherwise getTotalLength
+    // can return 0 on hidden / display:none parents and the paths render invisibly.
     const draw = root.querySelectorAll<SVGGeometryElement>("[data-draw]");
-    draw.forEach((el) => {
-      const len = el.getTotalLength();
-      el.setAttribute("stroke-dasharray", String(len));
-      el.setAttribute("stroke-dashoffset", String(len));
-    });
+    requestAnimationFrame(() => {
+      draw.forEach((el) => {
+        const len = el.getTotalLength?.() ?? 0;
+        if (len > 0) {
+          el.setAttribute("stroke-dasharray", String(len));
+          el.setAttribute("stroke-dashoffset", String(len));
+        }
+      });
 
-    gsap.to(draw, {
-      strokeDashoffset: 0,
-      duration: 1.4,
-      stagger: 0.025,
-      ease: "expo.out",
-      scrollTrigger: { trigger: root, start: "top 92%", once: true },
+      gsap.to(draw, {
+        strokeDashoffset: 0,
+        duration: 1.4,
+        stagger: 0.025,
+        ease: "expo.out",
+        scrollTrigger: { trigger: root, start: "top 92%", once: true },
+      });
     });
 
     if (slug === "construction") {
@@ -113,7 +120,7 @@ export default function ProjectScene({ slug, className, seed = 0 }: Props) {
   return (
     <div
       ref={ref}
-      className={`relative h-full w-full ${className ?? ""}`}
+      className={cn("block w-full", className)}
       aria-hidden="true"
     >
       <svg

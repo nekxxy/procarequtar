@@ -4,6 +4,7 @@ import SplitText from "../react/SplitText.tsx";
 import HeroRotator from "../react/HeroRotator.tsx";
 import MagneticButton from "../react/MagneticButton.tsx";
 import IsometricTower from "../react/IsometricTower.tsx";
+import HeroScene3D from "../react/HeroScene3D.tsx";
 
 interface Props {
   lang: Locale;
@@ -94,9 +95,14 @@ const rotators = tn<string[]>(lang, "home.hero.headlineRotators");
       </div>
     </div>
 
-    <!-- Animated tower scene (desktop & tablet) -->
-    <div class="hidden lg:col-span-5 lg:flex lg:items-center lg:justify-center">
-      <IsometricTower client:visible />
+    <!-- 3D animated tower scene on desktop, SVG version on tablet, hidden on phone -->
+    <div class="hidden md:flex md:items-center md:justify-center lg:col-span-5">
+      <div class="hidden lg:block lg:w-full">
+        <HeroScene3D client:visible floors={14} />
+      </div>
+      <div class="md:block lg:hidden">
+        <IsometricTower client:visible />
+      </div>
     </div>
   </div>
 </section>
