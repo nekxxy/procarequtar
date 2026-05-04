@@ -1,0 +1,38 @@
+---
+import { localizedHref, type Locale } from "../../i18n/utils";
+import LangSwitcher from "../react/LangSwitcher.tsx";
+import Logo from "./Logo.astro";
+
+interface Props {
+  lang: Locale;
+  otherLocale: Locale;
+}
+const { lang, otherLocale } = Astro.props;
+const otherLabel = lang === "en" ? "العربية" : "English";
+---
+
+<div
+  class="fixed inset-x-0 top-0 z-30 flex items-center justify-between gap-3 px-4 pt-3 md:hidden"
+>
+  <div
+    class="flex items-center gap-3 rounded-full border border-[color-mix(in_srgb,var(--fg)_15%,transparent)] bg-[color-mix(in_srgb,var(--bg)_80%,transparent)] px-3.5 py-1.5 backdrop-blur-2xl"
+  >
+    <a
+      href={localizedHref("/", lang)}
+      aria-label="Pro Care Qatar — home"
+      class="inline-flex items-center"
+    >
+      <Logo />
+    </a>
+  </div>
+  <div
+    class="flex items-center gap-3 rounded-full border border-[color-mix(in_srgb,var(--fg)_15%,transparent)] bg-[color-mix(in_srgb,var(--bg)_80%,transparent)] px-3.5 py-2 backdrop-blur-2xl"
+  >
+    <LangSwitcher
+      client:load
+      current={lang}
+      other={otherLocale}
+      otherLabel={otherLabel}
+    />
+  </div>
+</div>

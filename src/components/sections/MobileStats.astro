@@ -1,0 +1,31 @@
+---
+import { t, tn, type Locale } from "../../i18n/utils";
+import StatsCounter from "../react/StatsCounter.tsx";
+
+interface Props {
+  lang: Locale;
+}
+const { lang } = Astro.props;
+interface StatItem {
+  value: number;
+  suffix: string;
+  label: string;
+}
+const items = tn<StatItem[]>(lang, "home.stats.items");
+---
+
+<section
+  class="relative bg-[var(--color-bg-dark)] text-[var(--color-fg-dark)] px-5 py-20 md:hidden"
+  data-theme-section="dark"
+>
+  <span class="eyebrow inline-flex items-center gap-2 text-white/65">
+    <span class="inline-block h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" aria-hidden="true"></span>
+    {t(lang, "home.stats.eyebrow")}
+  </span>
+  <h2 class="display mt-4 text-balance text-[clamp(1.875rem,7vw,2.5rem)]">
+    {t(lang, "home.about.title")}
+  </h2>
+  <div class="mt-10">
+    <StatsCounter client:visible items={items} />
+  </div>
+</section>

@@ -11,6 +11,14 @@ import AboutTeaser from "./AboutTeaser.astro";
 import CtaBand from "./CtaBand.astro";
 import ThemeMorph from "../react/ThemeMorph.tsx";
 
+import MobileHero from "./MobileHero.astro";
+import MobileServices from "./MobileServices.astro";
+import MobileTimeline from "./MobileTimeline.astro";
+import MobileProjects from "./MobileProjects.astro";
+import MobileStats from "./MobileStats.astro";
+import MobileAbout from "./MobileAbout.astro";
+import MobileCta from "./MobileCta.astro";
+
 interface Props {
   lang: Locale;
 }
@@ -19,20 +27,24 @@ const { lang } = Astro.props;
 
 <ThemeMorph client:idle />
 
-<Hero lang={lang} />
+<!-- Mobile-only experience (visible <768px) -->
+<MobileHero lang={lang} />
+<MobileServices lang={lang} />
+<MobileTimeline lang={lang} />
+<MobileProjects lang={lang} />
+<MobileStats lang={lang} />
+<MobileAbout lang={lang} />
+<MobileCta lang={lang} />
 
-<MarqueeBand lang={lang} />
-
-<ServicesShowcase lang={lang} />
-
-<RevealSection lang={lang} />
-
-<ProcessSection lang={lang} />
-
-<ProjectsTeaser lang={lang} />
-
-<StatsBand lang={lang} />
-
-<AboutTeaser lang={lang} />
-
-<CtaBand lang={lang} />
+<!-- Desktop / tablet experience (hidden <768px) -->
+<div class="hidden md:contents">
+  <Hero lang={lang} />
+  <MarqueeBand lang={lang} />
+  <ServicesShowcase lang={lang} />
+  <RevealSection lang={lang} />
+  <ProcessSection lang={lang} />
+  <ProjectsTeaser lang={lang} />
+  <StatsBand lang={lang} />
+  <AboutTeaser lang={lang} />
+  <CtaBand lang={lang} />
+</div>

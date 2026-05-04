@@ -1,0 +1,79 @@
+---
+import { t, tn, localizedHref, type Locale } from "../../i18n/utils";
+import HeroRotator from "../react/HeroRotator.tsx";
+import RealisticConstruction3D from "../react/RealisticConstruction3D.tsx";
+
+interface Props {
+  lang: Locale;
+}
+const { lang } = Astro.props;
+const rotators = tn<string[]>(lang, "home.hero.headlineRotators");
+---
+
+<section
+  class="relative min-h-[100svh] overflow-hidden bg-[var(--color-bg)] text-[var(--color-fg)] md:hidden"
+  data-theme-section="light"
+>
+  <!-- Ambient gradients -->
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute -top-32 -end-20 h-[22rem] w-[22rem] rounded-full bg-[radial-gradient(circle,var(--color-accent)_0%,transparent_60%)] opacity-30 blur-3xl"
+  ></div>
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute -bottom-12 start-1/4 h-[18rem] w-[18rem] rounded-full bg-[radial-gradient(circle,var(--color-accent-3)_0%,transparent_60%)] opacity-25 blur-3xl"
+  ></div>
+
+  <div class="relative z-10 flex min-h-[100svh] flex-col px-5 pb-32 pt-24">
+    <!-- Eyebrow chip -->
+    <span class="eyebrow inline-flex items-center gap-2 self-start rounded-full border border-[color-mix(in_srgb,var(--fg)_18%,transparent)] bg-[color-mix(in_srgb,var(--bg)_60%,transparent)] px-3 py-1.5 backdrop-blur">
+      <span class="inline-block h-1.5 w-1.5 rounded-full bg-[var(--color-accent)] animate-pulse" aria-hidden="true"></span>
+      {t(lang, "home.hero.eyebrow")}
+    </span>
+
+    <!-- Headline -->
+    <h1 class="display mt-6 text-balance text-[clamp(2.5rem,11vw,4rem)] leading-[0.98]">
+      {t(lang, "home.hero.headlinePre")}
+      <span class="mt-1 block">
+        <HeroRotator client:visible words={rotators} />
+      </span>
+    </h1>
+
+    <!-- Live realistic 3D scene -->
+    <div class="-mx-5 mt-6">
+      <RealisticConstruction3D client:visible surface="light" />
+    </div>
+
+    <!-- Lead copy -->
+    <p class="mt-2 text-base text-[var(--muted)]">
+      {t(lang, "home.hero.lead")}
+    </p>
+
+    <!-- CTA stack -->
+    <div class="mt-8 flex flex-col gap-3">
+      <a
+        href={localizedHref("/contact", lang)}
+        class="inline-flex h-14 items-center justify-center gap-2 rounded-full bg-[var(--color-fg)] text-[var(--color-bg)] px-6 text-base font-medium"
+      >
+        {t(lang, "home.hero.primaryCta")}
+        <svg width="14" height="14" viewBox="0 0 18 18" fill="none" class="rtl:rotate-180" aria-hidden="true">
+          <path d="M3 9h12M11 4l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </a>
+      <a
+        href={localizedHref("/projects", lang)}
+        class="inline-flex h-14 items-center justify-center rounded-full border border-[color-mix(in_srgb,var(--fg)_22%,transparent)] px-6 text-base font-medium text-[var(--fg)]"
+      >
+        {t(lang, "home.hero.secondaryCta")}
+      </a>
+    </div>
+
+    <!-- Pull-to-explore hint -->
+    <div class="mt-10 flex flex-col items-center gap-3 self-center">
+      <span class="font-mono text-[0.65rem] uppercase tracking-[0.3em] text-[var(--muted)]">
+        {t(lang, "home.hero.scrollHint")}
+      </span>
+      <span aria-hidden="true" class="block h-10 w-px bg-gradient-to-b from-[var(--color-accent)] to-transparent"></span>
+    </div>
+  </div>
+</section>

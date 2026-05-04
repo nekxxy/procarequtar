@@ -10,8 +10,12 @@ import {
 import SmoothScroll from "../components/react/SmoothScroll";
 import Cursor from "../components/react/Cursor";
 import Preloader from "../components/react/Preloader";
+import MobileFAB from "../components/react/MobileFAB.tsx";
 import Header from "../components/astro/Header.astro";
 import Footer from "../components/astro/Footer.astro";
+import MobileBottomNav from "../components/astro/MobileBottomNav.astro";
+import MobileTopBar from "../components/astro/MobileTopBar.astro";
+import { localizedHref, t as tr } from "../i18n/utils";
 
 interface Props {
   title?: string;
@@ -71,11 +75,20 @@ const faviconHref = `${BASE}/favicon.svg`;
     <Cursor client:idle />
 
     <Header lang={lang} otherLocale={otherLocale} />
+    <MobileTopBar lang={lang} otherLocale={otherLocale} />
 
     <main id="main" data-lang={lang}>
       <slot />
     </main>
 
     <Footer lang={lang} />
+
+    <!-- Mobile-only persistent shells -->
+    <MobileFAB
+      client:idle
+      href={localizedHref("/contact", lang)}
+      label={tr(lang, "home.cta.button")}
+    />
+    <MobileBottomNav lang={lang} />
   </body>
 </html>

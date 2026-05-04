@@ -1,0 +1,37 @@
+---
+import { t, localizedHref, type Locale } from "../../i18n/utils";
+import DohaSkyline from "../react/DohaSkyline.tsx";
+
+interface Props {
+  lang: Locale;
+}
+const { lang } = Astro.props;
+---
+
+<section
+  class="relative overflow-hidden bg-[var(--color-bg)] text-[var(--color-fg)] px-5 py-20 md:hidden"
+  data-theme-section="light"
+>
+  <span class="eyebrow inline-flex items-center gap-2">
+    <span class="inline-block h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" aria-hidden="true"></span>
+    {t(lang, "home.about.eyebrow")}
+  </span>
+  <h2 class="display mt-4 text-balance text-[clamp(2rem,8vw,2.75rem)] leading-[1.0]">
+    {t(lang, "home.about.title")}
+  </h2>
+  <p class="mt-4 text-base text-[var(--muted)]">
+    {t(lang, "home.about.body")}
+  </p>
+
+  <a
+    href={localizedHref("/about", lang)}
+    class="mt-6 inline-flex items-center gap-2 text-sm text-[var(--color-accent)]"
+  >
+    {t(lang, "home.about.cta")}
+    <span aria-hidden="true" class="rtl:rotate-180">→</span>
+  </a>
+
+  <div class="mt-10 -mx-5 text-[var(--fg)]">
+    <DohaSkyline client:visible />
+  </div>
+</section>

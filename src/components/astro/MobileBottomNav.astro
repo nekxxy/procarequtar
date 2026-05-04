@@ -1,0 +1,100 @@
+---
+import { localizedHref, t, type Locale } from "../../i18n/utils";
+
+interface Props {
+  lang: Locale;
+}
+const { lang } = Astro.props;
+
+const items = [
+  {
+    href: localizedHref("/", lang),
+    label: t(lang, "nav.home"),
+    key: "home",
+    icon: "M3 11l9-8 9 8M5 9.5V20a1 1 0 0 0 1 1h4v-7h4v7h4a1 1 0 0 0 1-1V9.5",
+  },
+  {
+    href: localizedHref("/services", lang),
+    label: t(lang, "nav.services"),
+    key: "services",
+    icon: "M4 7h16M4 12h16M4 17h10",
+  },
+  {
+    href: localizedHref("/projects", lang),
+    label: t(lang, "nav.projects"),
+    key: "projects",
+    icon: "M3 7l9-4 9 4-9 4-9-4zM3 12l9 4 9-4M3 17l9 4 9-4",
+  },
+  {
+    href: localizedHref("/about", lang),
+    label: t(lang, "nav.about"),
+    key: "about",
+    icon: "M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21a8 8 0 0 1 16 0",
+  },
+  {
+    href: localizedHref("/contact", lang),
+    label: t(lang, "nav.contact"),
+    key: "contact",
+    icon: "M4 6l8 6 8-6M4 6v12h16V6",
+  },
+];
+
+// Determine the active item from current URL
+const path = Astro.url.pathname;
+function isActive(href: string): boolean {
+  // Normalize trailing slashes for comparison
+  const a = path.replace(/\/+$/, "");
+  const b = href.replace(/\/+$/, "");
+  if (b === `/${lang}` || b === `/procarequtar/${lang}`) {
+    return a === b;
+  }
+  return a.startsWith(b);
+}
+---
+
+<nav
+  aria-label="Mobile navigation"
+  class="fixed inset-x-0 bottom-0 z-30 px-3 pb-3 md:hidden"
+>
+  <div
+    class="mx-auto flex max-w-[34rem] items-stretch justify-between rounded-full border border-[color-mix(in_srgb,var(--fg)_15%,transparent)] bg-[color-mix(in_srgb,var(--bg)_85%,transparent)] p-1.5 shadow-[0_24px_60px_-12px_color-mix(in_srgb,var(--fg)_30%,transparent)] backdrop-blur-2xl"
+  >
+    {
+      items.map((item) => {
+        const active = isActive(item.href);
+        return (
+          <a
+            href={item.href}
+            aria-current={active ? "page" : undefined}
+            class:list={[
+              "group relative flex flex-1 flex-col items-center justify-center gap-1 rounded-full py-2 text-[0.65rem] font-medium transition-colors",
+              active
+                ? "bg-[var(--color-accent)] text-black"
+                : "text-[var(--fg)]/65 hover:text-[var(--fg)]",
+            ]}
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d={item.icon} />
+            </svg>
+            <span class="text-[0.6rem] uppercase tracking-[0.1em]">
+              {item.label}
+            </span>
+          </a>
+        );
+      })
+    }
+  </div>
+</nav>
+
+<!-- Spacer so content doesn't sit behind the floating nav on mobile -->
+<div class="h-24 md:hidden" aria-hidden="true"></div>

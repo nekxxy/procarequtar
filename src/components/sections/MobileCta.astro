@@ -1,0 +1,37 @@
+---
+import { t, localizedHref, type Locale } from "../../i18n/utils";
+
+interface Props {
+  lang: Locale;
+}
+const { lang } = Astro.props;
+---
+
+<section
+  class="relative overflow-hidden bg-[var(--color-bg-dark)] text-[var(--color-fg-dark)] px-5 py-24 md:hidden"
+  data-theme-section="dark"
+>
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute inset-x-0 bottom-0 h-72 bg-[radial-gradient(60%_60%_at_50%_100%,var(--color-accent)/0.25,transparent_70%)]"
+  ></div>
+  <div class="relative">
+    <span class="eyebrow opacity-80">{t(lang, "home.cta.eyebrow")}</span>
+    <h2 class="display mt-4 text-balance text-[clamp(2.25rem,9vw,3rem)] leading-[1.0]">
+      {t(lang, "home.cta.title")}
+    </h2>
+    <p class="mt-4 text-base text-white/65">
+      {t(lang, "home.cta.subtitle")}
+    </p>
+
+    <a
+      href={localizedHref("/contact", lang)}
+      class="mt-8 inline-flex h-14 items-center justify-center gap-2 rounded-full bg-[var(--color-accent)] px-6 text-base font-medium text-black"
+    >
+      {t(lang, "home.cta.button")}
+      <svg width="14" height="14" viewBox="0 0 18 18" fill="none" class="rtl:rotate-180" aria-hidden="true">
+        <path d="M3 9h12M11 4l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </a>
+  </div>
+</section>
