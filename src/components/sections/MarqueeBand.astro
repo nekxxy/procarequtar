@@ -1,0 +1,22 @@
+---
+import { tn, type Locale } from "../../i18n/utils";
+import MarqueeWithScenes from "../react/MarqueeWithScenes.tsx";
+
+interface Props {
+  lang: Locale;
+}
+const { lang } = Astro.props;
+
+// Pull a richer set of mantra words for the marquee
+const trust = tn<string[]>(lang, "home.trust.items");
+const services = [
+  tn<string>(lang, "services.list.construction.title"),
+  tn<string>(lang, "services.list.post-construction-cleaning.title"),
+  tn<string>(lang, "services.list.building-materials.title"),
+  tn<string>(lang, "services.list.facility-maintenance.title"),
+  tn<string>(lang, "services.list.pest-control.title"),
+];
+const words = [...services, ...trust];
+---
+
+<MarqueeWithScenes client:visible words={words} speedSec={30} />

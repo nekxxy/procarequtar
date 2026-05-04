@@ -1,0 +1,22 @@
+---
+import { t, tn, SERVICE_SLUGS, type Locale } from "../../i18n/utils";
+import PinnedReveal from "../react/PinnedReveal.tsx";
+
+interface Props {
+  lang: Locale;
+}
+const { lang } = Astro.props;
+
+const stages = SERVICE_SLUGS.map((slug, i) => ({
+  slug,
+  index: String(i + 1).padStart(2, "0"),
+  title: tn<string>(lang, `services.list.${slug}.title`),
+  body: tn<string>(lang, `services.list.${slug}.description`),
+}));
+---
+
+<PinnedReveal
+  client:visible
+  stages={stages}
+  eyebrow={t(lang, "home.services.eyebrow")}
+/>
