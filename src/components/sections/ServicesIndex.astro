@@ -30,6 +30,7 @@ const { lang } = Astro.props;
       {
         SERVICE_SLUGS.map((slug, idx) => (
           <ServiceCard
+            slug={slug}
             index={String(idx + 1).padStart(2, "0")}
             code={tn<string>(lang, `services.list.${slug}.code`)}
             title={tn<string>(lang, `services.list.${slug}.title`)}

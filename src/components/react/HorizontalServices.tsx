@@ -2,10 +2,15 @@ import { useRef } from "react";
 import { useGsap } from "../../hooks/useGsap";
 import { useDirection } from "../../hooks/useDirection";
 import { gsap, ScrollTrigger } from "../../lib/gsap";
-import { localizedHref, type Locale } from "../../i18n/utils";
+import {
+  localizedHref,
+  type Locale,
+  type ServiceSlug,
+} from "../../i18n/utils";
+import ServiceIcon from "./ServiceIcon";
 
 export interface ServiceCardData {
-  slug: string;
+  slug: ServiceSlug;
   code: string;
   title: string;
   tagline: string;
@@ -84,6 +89,11 @@ export default function HorizontalServices({ cards, lang, ctaLabel }: Props) {
                   {card.code}
                 </span>
               </div>
+
+              <ServiceIcon
+                slug={card.slug}
+                className="h-20 w-20 self-start text-[var(--color-accent)] md:h-24 md:w-24"
+              />
 
               <div className="flex flex-col gap-4">
                 <h3 className="display text-3xl md:text-4xl lg:text-5xl">

@@ -1,4 +1,7 @@
 ---
+import ServiceIcon from "../react/ServiceIcon";
+import type { ServiceSlug } from "../../i18n/utils";
+
 interface Props {
   index: string;
   code: string;
@@ -6,8 +9,9 @@ interface Props {
   tagline: string;
   href: string;
   ctaLabel: string;
+  slug: ServiceSlug;
 }
-const { index, code, title, tagline, href, ctaLabel } = Astro.props;
+const { index, code, title, tagline, href, ctaLabel, slug } = Astro.props;
 ---
 
 <a
@@ -15,7 +19,7 @@ const { index, code, title, tagline, href, ctaLabel } = Astro.props;
   data-cursor-hover
   class="service-card group relative block overflow-hidden rounded-[var(--radius-xl)] border border-[color-mix(in_srgb,var(--fg)_12%,transparent)] bg-[color-mix(in_srgb,var(--fg)_3%,transparent)] p-8 transition-colors hover:border-[var(--color-accent)] md:p-10"
 >
-  <div class="mb-12 flex items-start justify-between text-xs">
+  <div class="mb-8 flex items-start justify-between text-xs">
     <span class="font-mono uppercase tracking-[0.25em] text-[var(--muted)]">
       {index}
     </span>
@@ -25,6 +29,11 @@ const { index, code, title, tagline, href, ctaLabel } = Astro.props;
       {code}
     </span>
   </div>
+  <ServiceIcon
+    client:visible
+    slug={slug}
+    className="mb-10 h-16 w-16 text-[var(--fg)] group-hover:text-[var(--color-accent)] transition-colors"
+  />
   <h3 class="display text-3xl md:text-4xl">{title}</h3>
   <p class="mt-3 text-base text-[var(--muted)]">{tagline}</p>
   <span class="mt-8 inline-flex items-center gap-2 text-sm text-[var(--color-accent)] transition-transform group-hover:translate-x-1 rtl:group-hover:-translate-x-1">

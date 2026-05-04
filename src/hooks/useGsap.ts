@@ -8,7 +8,7 @@ type Setup = (ctx: gsap.Context) => void | (() => void);
  * Astro view-transition swap. All animations created inside `setup()` are
  * automatically reverted by the context.
  */
-export function useGsap<T extends HTMLElement>(
+export function useGsap<T extends Element>(
   scopeRef: RefObject<T | null>,
   setup: Setup,
   deps: ReadonlyArray<unknown> = [],

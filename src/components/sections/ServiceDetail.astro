@@ -9,6 +9,7 @@ import {
 } from "../../i18n/utils";
 import RevealOnScroll from "../react/RevealOnScroll.tsx";
 import MagneticButton from "../react/MagneticButton.tsx";
+import ServiceIcon from "../react/ServiceIcon.tsx";
 
 interface Props {
   lang: Locale;
@@ -48,10 +49,21 @@ const others = SERVICE_SLUGS.filter((s) => s !== slug).slice(0, 4);
         C.R. CODE {code}
       </span>
     </div>
-    <h1 class="display mt-10 text-balance text-[clamp(2.75rem,9vw,8rem)] leading-[0.95]">
-      {title}
-    </h1>
-    <p class="mt-6 max-w-3xl text-xl text-white/70 md:text-2xl">{tagline}</p>
+    <div class="mt-10 grid grid-cols-1 items-end gap-10 md:grid-cols-12">
+      <div class="md:col-span-8">
+        <h1 class="display text-balance text-[clamp(2.75rem,9vw,8rem)] leading-[0.95]">
+          {title}
+        </h1>
+        <p class="mt-6 max-w-3xl text-xl text-white/70 md:text-2xl">{tagline}</p>
+      </div>
+      <div class="md:col-span-4 md:flex md:justify-end">
+        <ServiceIcon
+          client:visible
+          slug={slug}
+          className="h-32 w-32 text-[var(--color-accent)] md:h-40 md:w-40"
+        />
+      </div>
+    </div>
   </div>
 </section>
 
