@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { useGsap } from "../../hooks/useGsap";
-import { gsap } from "../../lib/gsap";
+import { gsap, ScrollTrigger } from "../../lib/gsap";
 
 /**
  * Animated isometric construction tower for the hero.
@@ -79,6 +79,39 @@ export default function IsometricTower() {
       ease: "none",
       repeat: -1,
     });
+
+    // Scroll-tied "construction progress" — additional floors stack from the
+    // top as the user scrolls past the hero. We start the floors at half-built
+    // and scrub up to fully built.
+    const floorEls = root.querySelectorAll<SVGGElement>(".floor");
+    if (floorEls.length) {
+      // Hide the upper half initially
+      const halfIdx = Math.floor(floorEls.length / 2);
+      floorEls.forEach((el, i) => {
+        if (i >= halfIdx) gsap.set(el, { opacity: 0, y: 8 });
+      });
+      ScrollTrigger.create({
+        trigger: svg,
+        start: "top 80%",
+        end: "bottom top",
+        scrub: 0.6,
+        onUpdate: (self) => {
+          const target = halfIdx + Math.round(self.progress * (floorEls.length - halfIdx));
+          floorEls.forEach((el, i) => {
+            const visible = i < target;
+            gsap.to(el, {
+              opacity: visible ? 1 : 0,
+              y: visible ? 0 : 8,
+              duration: 0.35,
+              overwrite: true,
+            });
+          });
+          // Update the floor counter HTML annotation
+          const counter = root.querySelector<HTMLElement>("[data-floor-count]");
+          if (counter) counter.textContent = String(target).padStart(2, "0");
+        },
+      });
+    }
 
     // Subtle mouse parallax on desktop
     const isCoarse = window.matchMedia("(pointer: coarse)").matches;
@@ -338,9 +371,9 @@ export default function IsometricTower() {
         className="absolute right-[6%] top-[42%] hidden md:block"
       >
         <div className="font-mono text-[0.65rem] uppercase tracking-[0.25em] text-[var(--muted)]">
-          Floor 24
+          Floor <span data-floor-count>07</span>
         </div>
-        <div className="display text-base text-[var(--fg)]">+24 levels</div>
+        <div className="display text-base text-[var(--fg)]">In progress</div>
       </div>
       <div
         data-annotation

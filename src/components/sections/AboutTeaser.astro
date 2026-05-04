@@ -1,6 +1,7 @@
 ---
 import { t, localizedHref, type Locale } from "../../i18n/utils";
 import RevealOnScroll from "../react/RevealOnScroll.tsx";
+import DohaSkyline from "../react/DohaSkyline.tsx";
 
 interface Props {
   lang: Locale;
@@ -8,8 +9,8 @@ interface Props {
 const { lang } = Astro.props;
 ---
 
-<section class="bg-[var(--color-bg)] text-[var(--color-fg)]" data-theme-section="light">
-  <div class="mx-auto grid max-w-[100rem] grid-cols-1 gap-10 px-6 py-28 md:grid-cols-12 md:gap-16 md:px-10 md:py-40">
+<section class="relative overflow-hidden bg-[var(--color-bg)] text-[var(--color-fg)]" data-theme-section="light">
+  <div class="mx-auto grid max-w-[100rem] grid-cols-1 gap-10 px-6 pt-28 md:grid-cols-12 md:gap-16 md:px-10 md:pt-40">
     <div class="md:col-span-5">
       <span class="eyebrow inline-flex items-center gap-3">
         <span class="inline-block h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]" aria-hidden="true" />
@@ -32,5 +33,10 @@ const { lang } = Astro.props;
         <span aria-hidden="true" class="rtl:rotate-180">→</span>
       </a>
     </RevealOnScroll>
+  </div>
+
+  <!-- Doha skyline silhouette -->
+  <div class="mx-auto mt-16 max-w-[100rem] px-6 pb-28 text-[var(--fg)] md:px-10 md:pb-40">
+    <DohaSkyline client:visible />
   </div>
 </section>

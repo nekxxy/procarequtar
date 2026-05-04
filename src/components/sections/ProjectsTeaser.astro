@@ -1,7 +1,14 @@
 ---
-import { t, tn, localizedHref, type Locale } from "../../i18n/utils";
+import {
+  t,
+  tn,
+  localizedHref,
+  type Locale,
+  type ServiceSlug,
+} from "../../i18n/utils";
 import SectionHeading from "../astro/SectionHeading.astro";
 import RevealOnScroll from "../react/RevealOnScroll.tsx";
+import ProjectScene from "../react/ProjectScene.tsx";
 
 interface Props {
   lang: Locale;
@@ -10,7 +17,7 @@ const { lang } = Astro.props;
 
 interface ProjectItem {
   title: string;
-  service: string;
+  service: ServiceSlug;
   year: string;
 }
 const items = tn<ProjectItem[]>(lang, "projects.items").slice(0, 4);
@@ -36,17 +43,23 @@ const items = tn<ProjectItem[]>(lang, "projects.items").slice(0, 4);
     <div class="md:col-span-7">
       <RevealOnScroll client:visible className="grid grid-cols-1 gap-6 sm:grid-cols-2">
         {
-          items.map((item) => (
-            <article class="group relative aspect-[4/5] overflow-hidden rounded-[var(--radius-lg)] border border-white/8 bg-gradient-to-br from-white/[0.04] to-white/[0.01]">
+          items.map((item, idx) => (
+            <article class="group relative aspect-[4/5] overflow-hidden rounded-[var(--radius-lg)] border border-white/10 bg-gradient-to-br from-white/[0.05] to-white/[0.01] transition-colors hover:border-[var(--color-accent)]/60">
               <div
                 class="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,color-mix(in_srgb,var(--color-accent)_25%,transparent),transparent_60%)] opacity-50 transition-opacity duration-700 group-hover:opacity-100"
                 aria-hidden="true"
               />
-              <div class="relative flex h-full flex-col justify-between p-6">
+              <ProjectScene
+                client:visible
+                slug={item.service}
+                seed={idx + 1}
+                className="absolute inset-x-0 top-0 h-[58%] text-white/85"
+              />
+              <div class="relative flex h-full flex-col justify-end p-6">
                 <span class="font-mono text-[0.65rem] uppercase tracking-[0.25em] text-white/55">
                   {item.year} · {t(lang, `services.list.${item.service}.title`)}
                 </span>
-                <h3 class="display text-2xl leading-tight md:text-3xl">{item.title}</h3>
+                <h3 class="display mt-3 text-2xl leading-tight md:text-3xl">{item.title}</h3>
               </div>
             </article>
           ))

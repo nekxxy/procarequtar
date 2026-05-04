@@ -1,5 +1,11 @@
 ---
-import { t, tn, type Locale, SERVICE_SLUGS } from "../../i18n/utils";
+import {
+  t,
+  tn,
+  SERVICE_SLUGS,
+  type Locale,
+  type ServiceSlug,
+} from "../../i18n/utils";
 import ProjectsGrid from "../react/ProjectsGrid.tsx";
 
 interface Props {
@@ -9,7 +15,7 @@ const { lang } = Astro.props;
 
 interface RawProject {
   title: string;
-  service: string;
+  service: ServiceSlug;
   year: string;
 }
 const raw = tn<RawProject[]>(lang, "projects.items");

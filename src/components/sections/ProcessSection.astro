@@ -1,0 +1,33 @@
+---
+import { t, tn, type Locale } from "../../i18n/utils";
+import ProcessFlow from "../react/ProcessFlow.tsx";
+import SectionHeading from "../astro/SectionHeading.astro";
+
+interface Props {
+  lang: Locale;
+}
+const { lang } = Astro.props;
+
+interface Step {
+  index: string;
+  title: string;
+  body: string;
+}
+const steps = tn<Step[]>(lang, "home.process.steps");
+---
+
+<section class="bg-[var(--color-bg)] text-[var(--color-fg)]" data-theme-section="light">
+  <div class="mx-auto max-w-[100rem] px-6 py-28 md:px-10 md:py-40">
+    <SectionHeading
+      eyebrow={t(lang, "home.process.eyebrow")}
+      title={t(lang, "home.process.title")}
+      subtitle={t(lang, "home.process.subtitle")}
+      className="mb-16 md:mb-20"
+    />
+    <ProcessFlow
+      client:visible
+      steps={steps}
+      progressLabel={t(lang, "home.process.progressLabel")}
+    />
+  </div>
+</section>

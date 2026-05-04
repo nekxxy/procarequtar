@@ -55,6 +55,19 @@
       "subtitle": "Commercial fit-outs, residential towers, post-handover deep cleans and ongoing FM contracts.",
       "cta": "View the gallery"
     },
+    "process": {
+      "eyebrow": "How we work",
+      "title": "From brief to year-three FM.",
+      "subtitle": "One operator, one process, five disciplines under the same roof.",
+      "progressLabel": "Project lifecycle",
+      "steps": [
+        { "index": "01", "title": "Brief & survey", "body": "Site walk, scope alignment, drawings review. Quote within one business day." },
+        { "index": "02", "title": "Build", "body": "Ground-up construction or interior fit-out, MEP coordination, snag close-out." },
+        { "index": "03", "title": "Commission", "body": "Three-stage post-construction clean and handover walkthrough — handover-ready." },
+        { "index": "04", "title": "Maintain", "body": "PPM and reactive FM contracts: HVAC, electrical, plumbing, civil, soft FM." },
+        { "index": "05", "title": "Protect", "body": "MOPH-aligned disinfection and pest cycles to keep the asset safe and compliant." }
+      ]
+    },
     "stats": {
       "eyebrow": "By the numbers",
       "items": [

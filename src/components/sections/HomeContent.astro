@@ -2,6 +2,7 @@
 import { tn, type Locale } from "../../i18n/utils";
 import Hero from "./Hero.astro";
 import ServicesShowcase from "./ServicesShowcase.astro";
+import ProcessSection from "./ProcessSection.astro";
 import ProjectsTeaser from "./ProjectsTeaser.astro";
 import StatsBand from "./StatsBand.astro";
 import AboutTeaser from "./AboutTeaser.astro";
@@ -23,6 +24,8 @@ const trust = tn<string[]>(lang, "home.trust.items");
 <Marquee items={trust} speed={45} />
 
 <ServicesShowcase lang={lang} />
+
+<ProcessSection lang={lang} />
 
 <ProjectsTeaser lang={lang} />
 

@@ -1,10 +1,12 @@
 import { useMemo, useState, useRef } from "react";
 import { useGsap } from "../../hooks/useGsap";
 import { gsap, ScrollTrigger } from "../../lib/gsap";
+import ProjectScene from "./ProjectScene";
+import type { ServiceSlug } from "../../i18n/utils";
 
 export interface ProjectItem {
   title: string;
-  service: string;
+  service: ServiceSlug;
   serviceLabel: string;
   year: string;
 }
@@ -84,12 +86,12 @@ export default function ProjectsGrid({ items, filters, allLabel }: Props) {
         ref={ref}
         className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
       >
-        {visible.map((p) => (
+        {visible.map((p, idx) => (
           <article
             key={p.title}
             data-project
             data-cursor-hover
-            className="group relative aspect-[4/5] overflow-hidden rounded-[var(--radius-lg)] border border-[color-mix(in_srgb,var(--fg)_8%,transparent)] bg-[color-mix(in_srgb,var(--fg)_4%,transparent)]"
+            className="group relative aspect-[4/5] overflow-hidden rounded-[var(--radius-lg)] border border-[color-mix(in_srgb,var(--fg)_10%,transparent)] bg-[color-mix(in_srgb,var(--fg)_4%,transparent)] transition-colors hover:border-[var(--color-accent)]"
           >
             <div
               className="absolute inset-0 bg-gradient-to-br from-[var(--color-accent)]/20 via-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100"
@@ -99,11 +101,16 @@ export default function ProjectsGrid({ items, filters, allLabel }: Props) {
               className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,color-mix(in_srgb,var(--fg)_8%,transparent),transparent_60%)]"
               aria-hidden="true"
             />
-            <div className="relative flex h-full flex-col justify-between p-6">
+            <ProjectScene
+              slug={p.service}
+              seed={idx + 1}
+              className="absolute inset-x-0 top-0 h-[58%] text-[var(--fg)]"
+            />
+            <div className="relative flex h-full flex-col justify-end p-6">
               <span className="font-mono text-[0.65rem] uppercase tracking-[0.25em] text-[var(--muted)]">
                 {p.year} · {p.serviceLabel}
               </span>
-              <h3 className="display text-2xl leading-tight md:text-3xl">
+              <h3 className="display mt-3 text-2xl leading-tight md:text-3xl">
                 {p.title}
               </h3>
             </div>
