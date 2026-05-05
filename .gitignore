@@ -26,3 +26,4 @@ pnpm-debug.log*
 
 # misc
 *.tsbuildinfo
+assets/*.zip
