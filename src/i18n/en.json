@@ -88,6 +88,29 @@
       "title": "Tell us about your site.",
       "subtitle": "Quote within one business day.",
       "button": "Start a project"
+    },
+    "sequence": {
+      "hero": {
+        "eyebrow": "Pro Care · Doha",
+        "title": "Engineered care, in 240 frames.",
+        "lead": "Scroll through one continuous build — from concrete pour to handover.",
+        "scrollCue": "Scroll to explore"
+      },
+      "overlays": [
+        { "at": 0.12, "eyebrow": "01 / 04", "title": "Engineered care." },
+        { "at": 0.32, "eyebrow": "02 / 04", "title": "Five disciplines, one team." },
+        { "at": 0.55, "eyebrow": "03 / 04", "title": "Construction. Cleaning. Care." },
+        { "at": 0.80, "eyebrow": "04 / 04", "title": "Pro Care · Doha · Qatar" }
+      ],
+      "footer": {
+        "eyebrow": "Start the conversation",
+        "title": "Tell us about your site.",
+        "subtitle": "Quote within one business day.",
+        "primaryCta": "Start a project",
+        "secondaryCta": "See our work"
+      },
+      "loader": "Loading sequence",
+      "skip": "Skip intro"
     }
   },
   "services": {

@@ -1,0 +1,102 @@
+---
+import { t, localizedHref, type Locale } from "../../i18n/utils";
+import LangSwitcher from "../react/LangSwitcher.tsx";
+
+interface Props {
+  lang: Locale;
+  otherLocale: Locale;
+}
+const { lang, otherLocale } = Astro.props;
+const otherLabel = lang === "en" ? "العربية" : "English";
+---
+
+<section
+  id="site-footer"
+  class="relative min-h-[100svh] overflow-hidden px-6 py-24 md:px-10 md:py-32"
+  style="background:#1a1c1e"
+>
+  <!-- ambient glow at the bottom -->
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute inset-x-0 bottom-0 h-[40svh] bg-[radial-gradient(60%_60%_at_50%_100%,#FF5B1F33,transparent_70%)]"
+  >
+  </div>
+
+  <div class="relative mx-auto flex h-full max-w-[78rem] flex-col gap-10">
+    <span
+      class="inline-flex items-center gap-2.5 self-start rounded-full border border-white/15 bg-white/[0.04] px-3 py-1.5 font-mono text-[0.6rem] uppercase tracking-[0.3em] text-white/70 backdrop-blur"
+    >
+      <span class="inline-block h-1.5 w-1.5 rounded-full bg-[#FF5B1F]" aria-hidden="true"></span>
+      {t(lang, "home.sequence.footer.eyebrow")}
+    </span>
+
+    <h2
+      class="max-w-[18ch] text-balance text-[clamp(2.5rem,8vw,6rem)] font-medium leading-[0.98] tracking-[-0.03em] text-white/90"
+    >
+      {t(lang, "home.sequence.footer.title")}
+    </h2>
+
+    <p class="max-w-xl text-base text-white/60 md:text-lg">
+      {t(lang, "home.sequence.footer.subtitle")}
+    </p>
+
+    <div class="flex flex-wrap items-center gap-3">
+      <a
+        href={localizedHref("/contact", lang)}
+        class="inline-flex h-14 items-center justify-center gap-2 rounded-full bg-white px-6 text-base font-medium text-[#1a1c1e] transition-colors hover:bg-[#FF5B1F] hover:text-black"
+      >
+        {t(lang, "home.sequence.footer.primaryCta")}
+        <svg width="14" height="14" viewBox="0 0 18 18" fill="none" class="rtl:rotate-180" aria-hidden="true">
+          <path d="M3 9h12M11 4l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </a>
+      <a
+        href={localizedHref("/projects", lang)}
+        class="inline-flex h-14 items-center justify-center rounded-full border border-white/20 px-6 text-base font-medium text-white/85 transition-colors hover:border-white/60 hover:text-white"
+      >
+        {t(lang, "home.sequence.footer.secondaryCta")}
+      </a>
+    </div>
+
+    <!-- Site links + meta -->
+    <div class="mt-auto grid grid-cols-1 gap-8 border-t border-white/10 pt-10 md:grid-cols-12">
+      <div class="md:col-span-5">
+        <div class="font-mono text-[0.6rem] uppercase tracking-[0.3em] text-white/40">
+          {t(lang, "footer.registry")}
+        </div>
+        <p class="mt-4 max-w-md text-sm text-white/55">
+          {t(lang, "footer.tagline")}
+        </p>
+      </div>
+      <nav
+        aria-label="Site"
+        class="flex flex-wrap items-center gap-x-6 gap-y-3 text-sm md:col-span-5"
+      >
+        <a href={localizedHref("/services", lang)} class="text-white/65 hover:text-white">
+          {t(lang, "nav.services")}
+        </a>
+        <a href={localizedHref("/projects", lang)} class="text-white/65 hover:text-white">
+          {t(lang, "nav.projects")}
+        </a>
+        <a href={localizedHref("/about", lang)} class="text-white/65 hover:text-white">
+          {t(lang, "nav.about")}
+        </a>
+        <a href={localizedHref("/contact", lang)} class="text-white/65 hover:text-white">
+          {t(lang, "nav.contact")}
+        </a>
+      </nav>
+      <div class="flex items-center justify-between gap-3 md:col-span-2 md:justify-end">
+        <LangSwitcher
+          client:load
+          current={lang}
+          other={otherLocale}
+          otherLabel={otherLabel}
+        />
+      </div>
+    </div>
+
+    <div class="border-t border-white/10 pt-6 text-xs text-white/35">
+      {t(lang, "footer.rights")}
+    </div>
+  </div>
+</section>

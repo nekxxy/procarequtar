@@ -9,7 +9,8 @@
     "build": "astro check && astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "typecheck": "astro check"
+    "typecheck": "astro check",
+    "build:frames": "node scripts/build-frames.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
@@ -33,6 +34,8 @@
   "devDependencies": {
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
-    "@types/three": "^0.184.0"
+    "@types/three": "^0.184.0",
+    "adm-zip": "^0.5.17",
+    "sharp": "^0.34.5"
   }
 }

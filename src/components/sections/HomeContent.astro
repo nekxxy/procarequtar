@@ -1,50 +1,25 @@
 ---
-import type { Locale } from "../../i18n/utils";
-import Hero from "./Hero.astro";
-import MarqueeBand from "./MarqueeBand.astro";
-import ServicesShowcase from "./ServicesShowcase.astro";
-import RevealSection from "./RevealSection.astro";
-import ProcessSection from "./ProcessSection.astro";
-import ProjectsTeaser from "./ProjectsTeaser.astro";
-import StatsBand from "./StatsBand.astro";
-import AboutTeaser from "./AboutTeaser.astro";
-import CtaBand from "./CtaBand.astro";
-import ThemeMorph from "../react/ThemeMorph.tsx";
-
-import MobileHero from "./MobileHero.astro";
-import MobileServices from "./MobileServices.astro";
-import MobileTimeline from "./MobileTimeline.astro";
-import MobileProjects from "./MobileProjects.astro";
-import MobileStats from "./MobileStats.astro";
-import MobileAbout from "./MobileAbout.astro";
-import MobileCta from "./MobileCta.astro";
+import {
+  defaultLocale,
+  type Locale,
+  isLocale,
+} from "../../i18n/utils";
+import MinimalHero from "./MinimalHero.astro";
+import ScrollSequenceSection from "./ScrollSequenceSection.astro";
+import MinimalFooter from "./MinimalFooter.astro";
 
 interface Props {
   lang: Locale;
 }
 const { lang } = Astro.props;
+const otherLocale: Locale = lang === "en" ? "ar" : "en";
+// keep imports referenced (defaults / type guards exist for future use)
+void isLocale;
+void defaultLocale;
 ---
 
-<ThemeMorph client:idle />
+<MinimalHero lang={lang} />
 
-<!-- Mobile-only experience (visible <768px) -->
-<MobileHero lang={lang} />
-<MobileServices lang={lang} />
-<MobileTimeline lang={lang} />
-<MobileProjects lang={lang} />
-<MobileStats lang={lang} />
-<MobileAbout lang={lang} />
-<MobileCta lang={lang} />
+<ScrollSequenceSection lang={lang} />
 
-<!-- Desktop / tablet experience (hidden <768px) -->
-<div class="hidden md:contents">
-  <Hero lang={lang} />
-  <MarqueeBand lang={lang} />
-  <ServicesShowcase lang={lang} />
-  <RevealSection lang={lang} />
-  <ProcessSection lang={lang} />
-  <ProjectsTeaser lang={lang} />
-  <StatsBand lang={lang} />
-  <AboutTeaser lang={lang} />
-  <CtaBand lang={lang} />
-</div>
+<MinimalFooter lang={lang} otherLocale={otherLocale} />

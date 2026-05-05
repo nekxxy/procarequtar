@@ -1,0 +1,29 @@
+---
+import { tn, t, type Locale } from "../../i18n/utils";
+import ScrollSequence from "../react/ScrollSequence.tsx";
+
+interface Props {
+  lang: Locale;
+}
+const { lang } = Astro.props;
+
+interface OverlayJson {
+  at: number;
+  eyebrow?: string;
+  title: string;
+}
+const overlays = tn<OverlayJson[]>(lang, "home.sequence.overlays");
+
+const BASE = (import.meta.env.BASE_URL || "/").replace(/\/+$/, "");
+const basePath = `${BASE}/sequence`;
+---
+
+<ScrollSequence
+  client:idle
+  basePath={basePath}
+  frameCount={240}
+  overlays={overlays}
+  loaderLabel={t(lang, "home.sequence.loader")}
+  skipLabel={t(lang, "home.sequence.skip")}
+  skipHref="#site-footer"
+/>

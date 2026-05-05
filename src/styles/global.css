@@ -117,6 +117,26 @@
     --line: var(--color-line-dark);
   }
 
+  /* Cinematic home — match the image-sequence background exactly */
+  html[data-route="home"] {
+    color-scheme: dark;
+    --bg: #1a1c1e;
+    --fg: #ffffff;
+    --muted: #ffffff99;
+    --line: #ffffff15;
+    --color-bg-dark: #1a1c1e;
+    --color-fg-dark: #ffffff;
+    background: #1a1c1e !important;
+    font-feature-settings: "ss01", "cv11";
+  }
+  html[data-route="home"] body {
+    background: #1a1c1e !important;
+    color: #ffffffe6;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Text",
+      "Segoe UI", system-ui, sans-serif;
+    letter-spacing: -0.011em;
+  }
+
   body {
     background: var(--bg);
     color: var(--fg);

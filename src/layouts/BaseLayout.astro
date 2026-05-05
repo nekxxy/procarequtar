@@ -23,6 +23,9 @@ interface Props {
   theme?: "light" | "dark";
   /** Override locale (used by /index.astro language redirect) */
   lang?: Locale;
+  /** Page-level route key — drives global CSS overrides. Use "home" for
+   *  the cinematic scroll-sequence home, default "page" everywhere else. */
+  route?: "home" | "page";
 }
 
 const lang = (Astro.props.lang ?? getLangFromUrl(Astro.url)) as Locale;
@@ -30,6 +33,7 @@ const dir = getDir(lang);
 const title = Astro.props.title ?? t(lang, "meta.title");
 const description = Astro.props.description ?? t(lang, "meta.description");
 const theme = Astro.props.theme ?? "light";
+const route = Astro.props.route ?? "page";
 const canonical = new URL(Astro.url.pathname, Astro.site).toString();
 const otherLocale = lang === "en" ? "ar" : "en";
 
@@ -43,7 +47,7 @@ const faviconHref = `${BASE}/favicon.svg`;
 ---
 
 <!doctype html>
-<html lang={lang} dir={dir} data-theme={theme}>
+<html lang={lang} dir={dir} data-theme={theme} data-route={route}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -71,17 +75,17 @@ const faviconHref = `${BASE}/favicon.svg`;
     >
 
     <SmoothScroll client:load />
-    <Preloader lang={lang} client:load />
+    {route !== "home" && <Preloader lang={lang} client:load />}
     <Cursor client:idle />
 
-    <Header lang={lang} otherLocale={otherLocale} />
+    {route !== "home" && <Header lang={lang} otherLocale={otherLocale} />}
     <MobileTopBar lang={lang} otherLocale={otherLocale} />
 
     <main id="main" data-lang={lang}>
       <slot />
     </main>
 
-    <Footer lang={lang} />
+    {route !== "home" && <Footer lang={lang} />}
 
     <!-- Mobile-only persistent shells -->
     <MobileFAB

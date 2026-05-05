@@ -1,0 +1,88 @@
+---
+import { t, type Locale } from "../../i18n/utils";
+
+interface Props {
+  lang: Locale;
+}
+const { lang } = Astro.props;
+---
+
+<section
+  class="relative min-h-[100svh] overflow-hidden px-6 pb-16 pt-32 md:px-10 md:pb-24 md:pt-40"
+  style="background:#1a1c1e"
+  data-route-section="hero"
+>
+  <div class="mx-auto flex h-full max-w-[78rem] flex-col gap-10">
+    <!-- Eyebrow -->
+    <span
+      class="inline-flex items-center gap-2.5 self-start rounded-full border border-white/15 bg-white/[0.04] px-3 py-1.5 font-mono text-[0.6rem] uppercase tracking-[0.3em] text-white/70 backdrop-blur"
+    >
+      <span
+        class="inline-block h-1.5 w-1.5 rounded-full bg-[#FF5B1F] animate-pulse"
+        aria-hidden="true"
+      ></span>
+      {t(lang, "home.sequence.hero.eyebrow")}
+    </span>
+
+    <!-- Headline -->
+    <h1
+      class="text-balance text-[clamp(2.5rem,8.5vw,7rem)] font-medium leading-[0.98] tracking-[-0.03em] text-white/90"
+    >
+      {t(lang, "home.sequence.hero.title")}
+    </h1>
+
+    <!-- Lead -->
+    <p
+      class="max-w-xl text-base text-white/60 md:text-lg"
+    >
+      {t(lang, "home.sequence.hero.lead")}
+    </p>
+
+    <!-- Scroll cue -->
+    <div class="mt-auto flex items-end justify-between gap-6">
+      <div class="flex items-center gap-3">
+        <span class="scroll-cue block h-12 w-px bg-gradient-to-b from-white/40 to-transparent"></span>
+        <span
+          class="font-mono text-[0.6rem] uppercase tracking-[0.3em] text-white/55"
+        >
+          {t(lang, "home.sequence.hero.scrollCue")}
+        </span>
+      </div>
+      <div class="font-mono text-[0.6rem] uppercase tracking-[0.25em] text-white/35">
+        240 frames
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  @keyframes scrollCueFlow {
+    0% {
+      transform: scaleY(0);
+      transform-origin: top;
+      opacity: 1;
+    }
+    50% {
+      transform: scaleY(1);
+      transform-origin: top;
+      opacity: 1;
+    }
+    51% {
+      transform: scaleY(1);
+      transform-origin: bottom;
+    }
+    100% {
+      transform: scaleY(0);
+      transform-origin: bottom;
+      opacity: 0.5;
+    }
+  }
+  .scroll-cue {
+    animation: scrollCueFlow 2.6s ease-in-out infinite;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .scroll-cue {
+      animation: none;
+    }
+  }
+</style>
