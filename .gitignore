@@ -27,3 +27,10 @@ pnpm-debug.log*
 # misc
 *.tsbuildinfo
 assets/*.zip
+
+# Ruflo / claude-flow runtime data — config + skills are committed,
+# but logs, sessions and the AgentDB cache are ephemeral.
+.claude-flow/data/
+.claude-flow/logs/
+.claude-flow/sessions/
+.claude-flow/neural/

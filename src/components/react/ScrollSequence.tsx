@@ -318,8 +318,21 @@ export default function ScrollSequence({
       className="relative w-full"
       style={{ height: reduced ? "100vh" : "400vh", background: "#1a1c1e" }}
     >
+      {/* Hidden semantic narrative — keeps the four cinematic chapter
+          headlines reachable for screen readers + non-JS users, since the
+          visible versions live inside an aria-hidden canvas/region. */}
+      <div className="sr-only" aria-label="Sequence narrative">
+        {overlays.map((o, i) => (
+          <h2 key={i}>{o.title}</h2>
+        ))}
+      </div>
+
       {/* Sticky stage */}
-      <div className="sticky top-0 h-screen w-full overflow-hidden bg-[#1a1c1e]">
+      <div
+        className="sticky top-0 h-screen w-full overflow-hidden bg-[#1a1c1e]"
+        role="region"
+        aria-label="Cinematic project sequence"
+      >
         <canvas
           ref={canvasRef}
           aria-hidden="true"

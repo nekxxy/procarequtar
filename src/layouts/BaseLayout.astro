@@ -58,12 +58,67 @@ const faviconHref = `${BASE}/favicon.svg`;
     <link rel="alternate" hreflang="en" href={enHref} />
     <link rel="alternate" hreflang="ar" href={arHref} />
     <link rel="alternate" hreflang="x-default" href={`${BASE}/en/`} />
+    <link rel="sitemap" type="application/xml" href={`${BASE}/sitemap-index.xml`} />
+    <link rel="manifest" href={`${BASE}/manifest.json`} />
+
+    {/* OpenGraph + Twitter card */}
     <meta property="og:title" content={t(lang, "meta.ogTitle")} />
     <meta property="og:description" content={t(lang, "meta.ogDescription")} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
-    <meta name="theme-color" content={theme === "dark" ? "#0b0b0a" : "#f4f1ec"} />
+    <meta property="og:image" content={new URL(`${BASE}/og-image.png`, Astro.site).toString()} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content={lang === "ar" ? "ar_QA" : "en_QA"} />
+    <meta property="og:site_name" content="Pro Care Qatar" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={t(lang, "meta.ogTitle")} />
+    <meta name="twitter:description" content={t(lang, "meta.ogDescription")} />
+    <meta name="twitter:image" content={new URL(`${BASE}/og-image.png`, Astro.site).toString()} />
+
+    <meta name="theme-color" content={route === "home" ? "#1a1c1e" : theme === "dark" ? "#0b0b0a" : "#f4f1ec"} />
     <link rel="icon" href={faviconHref} type="image/svg+xml" />
+    <link rel="apple-touch-icon" href={faviconHref} />
+
+    {/* LocalBusiness structured data — knowledge-panel eligibility */}
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "@id": `${Astro.site}${BASE}/#business`,
+      name: "Pro Care Trading Contracting and Facility Services",
+      alternateName: "Pro Care Qatar",
+      description: t(lang, "meta.description"),
+      url: `${Astro.site}${BASE}/${lang}/`,
+      telephone: "+974 0000 0000",
+      email: "hello@procareqatar.com",
+      image: new URL(`${BASE}/og-image.png`, Astro.site).toString(),
+      logo: new URL(`${BASE}/favicon.svg`, Astro.site).toString(),
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Doha",
+        addressCountry: "QA",
+      },
+      areaServed: { "@type": "Country", name: "Qatar" },
+      identifier: { "@type": "PropertyValue", propertyID: "C.R.", value: "217949" },
+      openingHoursSpecification: {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Sunday","Monday","Tuesday","Wednesday","Thursday"],
+        opens: "08:00",
+        closes: "18:00",
+      },
+      knowsLanguage: ["en", "ar"],
+      hasOfferCatalog: {
+        "@type": "OfferCatalog",
+        name: "Pro Care services",
+        itemListElement: [
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Construction (C.R. 410029)" } },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Post-construction cleaning (C.R. 433091)" } },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Building materials retail (C.R. 475281)" } },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Facility maintenance (C.R. 811003)" } },
+          { "@type": "Offer", itemOffered: { "@type": "Service", name: "Pest control (C.R. 812904)" } },
+        ],
+      },
+    })} />
 
     {/* Cinematic home: warm up DNS / TLS for the sequence directory and
         preload the very first frame so the canvas paints near-instantly.

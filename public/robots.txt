@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Bilingual marketing site for Pro Care Trading Contracting and Facility
+# Services (C.R. 217949, Doha, Qatar). All content is intended for
+# discovery — no internal admin or auth surface.
+
+Sitemap: https://nekxxy.github.io/procarequtar/sitemap-index.xml

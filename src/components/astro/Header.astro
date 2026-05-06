@@ -1,7 +1,8 @@
 ---
-import { localizedHref, t, type Locale } from "../../i18n/utils";
+import { localizedHref, t, tn, type Locale } from "../../i18n/utils";
 import LangSwitcher from "../react/LangSwitcher.tsx";
 import MobileMenu from "../react/MobileMenu.tsx";
+import LiveTicker from "../react/LiveTicker.tsx";
 import Logo from "./Logo.astro";
 
 interface Props {
@@ -18,14 +19,23 @@ const links = [
   { href: localizedHref("/about", lang), label: t(lang, "nav.about") },
   { href: localizedHref("/contact", lang), label: t(lang, "nav.contact") },
 ];
+
+interface TickerItem {
+  prefix: string;
+  value: string;
+}
+const tickerItems = tn<TickerItem[]>(lang, "home.liveTicker.items");
 ---
 
 <header
   class="fixed inset-x-0 top-0 z-30 px-5 py-4 hidden md:block md:px-8 md:py-6"
   data-header
 >
-  <div class="glass mx-auto flex max-w-[100rem] items-center justify-between rounded-full px-5 py-2 md:px-7 md:py-2.5">
-    <Logo className="text-[var(--fg)]" />
+  <div class="glass mx-auto flex max-w-[100rem] items-center justify-between gap-4 rounded-full px-5 py-2 md:px-7 md:py-2.5">
+    <div class="flex items-center gap-4">
+      <Logo className="text-[var(--fg)]" />
+      <LiveTicker client:idle items={tickerItems} />
+    </div>
 
     <nav
       aria-label="Primary"

@@ -1,0 +1,36 @@
+{
+  "name": "Pro Care Qatar",
+  "short_name": "Pro Care",
+  "description": "Engineered care for buildings, facilities and the people inside them. Construction, post-construction cleaning, building materials, facility maintenance and pest control across Qatar.",
+  "start_url": "/procarequtar/en/",
+  "scope": "/procarequtar/",
+  "display": "standalone",
+  "background_color": "#1a1c1e",
+  "theme_color": "#1a1c1e",
+  "orientation": "portrait",
+  "lang": "en",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "/procarequtar/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/procarequtar/og-image.png",
+      "sizes": "1200x630",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "categories": ["business", "utilities"],
+  "screenshots": [
+    {
+      "src": "/procarequtar/og-image.png",
+      "sizes": "1200x630",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ]
+}

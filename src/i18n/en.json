@@ -43,6 +43,15 @@
         "24/7 dispatch"
       ]
     },
+    "liveTicker": {
+      "items": [
+        { "prefix": "Currently working in", "value": "Lusail" },
+        { "prefix": "Now scheduling", "value": "post-handover cleans" },
+        { "prefix": "Available", "value": "3 maintenance slots" },
+        { "prefix": "On site", "value": "Msheireb retail refurbishment" },
+        { "prefix": "Dispatching", "value": "termite barriers · Industrial Area" }
+      ]
+    },
     "services": {
       "eyebrow": "What we do",
       "title": "Five disciplines, executed to spec.",

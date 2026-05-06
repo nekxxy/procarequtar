@@ -1,0 +1,78 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { defaultLocale, localizedHref } from "../i18n/utils";
+const lang = defaultLocale;
+---
+
+<BaseLayout
+  lang={lang}
+  theme="dark"
+  route="home"
+  title="404 — Pro Care Qatar"
+  description="The page you were looking for has moved or never existed."
+>
+  <section
+    class="relative grid min-h-[100svh] place-items-center overflow-hidden px-6 py-20 md:px-10"
+    style="background:#1a1c1e"
+  >
+    <div
+      aria-hidden="true"
+      class="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_60%_at_50%_30%,#FF5B1F22,transparent_70%)]"
+    >
+    </div>
+
+    <div class="relative mx-auto flex max-w-[60rem] flex-col items-center gap-10 text-center">
+      <span
+        class="inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/[0.04] px-3 py-1.5 font-mono text-[0.6rem] uppercase tracking-[0.3em] text-white/70 backdrop-blur"
+      >
+        <span class="inline-block h-1.5 w-1.5 rounded-full bg-[#FF5B1F]" aria-hidden="true"></span>
+        Frame not found
+      </span>
+
+      <h1
+        class="text-balance text-[clamp(4rem,15vw,12rem)] font-medium leading-[0.92] tracking-[-0.04em] text-white"
+      >
+        404
+      </h1>
+
+      <p class="max-w-md text-base text-white/60 md:text-lg">
+        That route is not in our registry. Try one of the destinations below — or
+        head back to the cinematic home.
+      </p>
+
+      <div class="flex flex-wrap justify-center gap-3">
+        <a
+          href={localizedHref("/", lang)}
+          class="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-white px-5 text-sm font-medium text-[#1a1c1e] transition-colors hover:bg-[#FF5B1F]"
+        >
+          Home
+          <svg width="14" height="14" viewBox="0 0 18 18" fill="none" aria-hidden="true">
+            <path d="M3 9h12M11 4l5 5-5 5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </a>
+        <a
+          href={localizedHref("/services", lang)}
+          class="inline-flex h-12 items-center justify-center rounded-full border border-white/20 px-5 text-sm font-medium text-white/85 transition-colors hover:border-white/60 hover:text-white"
+        >
+          Services
+        </a>
+        <a
+          href={localizedHref("/projects", lang)}
+          class="inline-flex h-12 items-center justify-center rounded-full border border-white/20 px-5 text-sm font-medium text-white/85 transition-colors hover:border-white/60 hover:text-white"
+        >
+          Projects
+        </a>
+        <a
+          href={localizedHref("/contact", lang)}
+          class="inline-flex h-12 items-center justify-center rounded-full border border-white/20 px-5 text-sm font-medium text-white/85 transition-colors hover:border-white/60 hover:text-white"
+        >
+          Contact
+        </a>
+      </div>
+
+      <span class="font-mono text-[0.6rem] uppercase tracking-[0.3em] text-white/35">
+        C.R. 217949 · Doha · Qatar
+      </span>
+    </div>
+  </section>
+</BaseLayout>
