@@ -1,0 +1,107 @@
+---
+import { t, tn, localizedHref, SERVICE_SLUGS, type Locale } from "../../i18n/utils";
+import RevealOnScroll from "../react/RevealOnScroll.tsx";
+
+interface Props {
+  lang: Locale;
+}
+const { lang } = Astro.props;
+
+interface Row {
+  code: string;
+  title: string;
+  body: string;
+}
+const rows = tn<Row[]>(lang, "home.sequence.capabilities.rows");
+const slugs = SERVICE_SLUGS;
+---
+
+<section
+  class="relative overflow-hidden border-t border-white/10 px-6 py-28 md:px-12 md:py-40"
+  style="background:#1a1c1e"
+>
+  <div class="mx-auto max-w-[78rem]">
+    <div class="grid grid-cols-1 gap-12 md:grid-cols-12 md:gap-16">
+      <div class="md:col-span-5">
+        <span
+          class="inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/[0.04] px-3 py-1.5 font-mono text-[0.6rem] uppercase tracking-[0.3em] text-white/70 backdrop-blur"
+        >
+          <span class="inline-block h-1.5 w-1.5 rounded-full bg-[#FF5B1F]" aria-hidden="true"></span>
+          {t(lang, "home.sequence.capabilities.eyebrow")}
+        </span>
+
+        <h2
+          class="mt-8 text-balance text-[clamp(2rem,5.5vw,4.25rem)] font-medium leading-[0.98] tracking-[-0.025em] text-white/90"
+        >
+          {t(lang, "home.sequence.capabilities.title")}
+        </h2>
+
+        <p class="mt-6 max-w-md text-base text-white/55 md:text-lg">
+          {t(lang, "home.sequence.capabilities.lead")}
+        </p>
+      </div>
+
+      <RevealOnScroll
+        client:visible
+        className="md:col-span-7 flex flex-col"
+      >
+        {
+          rows.map((row, idx) => {
+            const slug = slugs[idx];
+            const href = slug
+              ? localizedHref(`/services/${slug}`, lang)
+              : undefined;
+            const Tag = href ? "a" : "div";
+            return (
+              <Tag
+                href={href}
+                data-cursor-hover={href ? "" : undefined}
+                data-cursor-label={href ? "Open" : undefined}
+                class:list={[
+                  "group relative grid grid-cols-12 items-baseline gap-4 border-t border-white/10 py-8 md:py-10",
+                  idx === rows.length - 1 ? "border-b border-white/10" : "",
+                  href ? "transition-colors hover:bg-white/[0.03]" : "",
+                ]}
+              >
+                <span class="col-span-2 font-mono text-[0.6rem] uppercase tracking-[0.3em] text-white/40 md:col-span-1">
+                  {String(idx + 1).padStart(2, "0")}
+                </span>
+                <span class="col-span-10 font-mono text-[0.6rem] uppercase tracking-[0.3em] text-white/40 md:col-span-2">
+                  {row.code}
+                </span>
+                <h3 class="col-span-12 text-balance text-[clamp(1.75rem,3.5vw,2.75rem)] font-medium leading-[1.02] tracking-[-0.02em] text-white/90 md:col-span-5">
+                  {row.title}
+                </h3>
+                <p class="col-span-12 text-sm text-white/55 md:col-span-4 md:text-base">
+                  {row.body}
+                </p>
+                {href && (
+                  <span
+                    class="absolute end-0 top-8 inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-white/65 transition-all duration-300 group-hover:border-[#FF5B1F] group-hover:text-[#FF5B1F] md:top-10"
+                    aria-hidden="true"
+                  >
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 18 18"
+                      fill="none"
+                      class="rtl:rotate-180"
+                    >
+                      <path
+                        d="M3 9h12M11 4l5 5-5 5"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
+                  </span>
+                )}
+              </Tag>
+            );
+          })
+        }
+      </RevealOnScroll>
+    </div>
+  </div>
+</section>

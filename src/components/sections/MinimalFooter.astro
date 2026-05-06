@@ -58,8 +58,41 @@ const otherLabel = lang === "en" ? "العربية" : "English";
       </a>
     </div>
 
+    <!-- Office / Hours / Direct contact data block -->
+    <div
+      class="mt-16 grid grid-cols-1 gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] sm:grid-cols-3"
+    >
+      <div class="flex flex-col gap-3 bg-[#1a1c1e] px-6 py-7">
+        <div class="font-mono text-[0.6rem] uppercase tracking-[0.3em] text-white/40">
+          {t(lang, "home.sequence.footer.office.label")}
+        </div>
+        <div class="text-base text-white/85">
+          {t(lang, "home.sequence.footer.office.value")}
+        </div>
+      </div>
+      <div class="flex flex-col gap-3 bg-[#1a1c1e] px-6 py-7">
+        <div class="font-mono text-[0.6rem] uppercase tracking-[0.3em] text-white/40">
+          {t(lang, "home.sequence.footer.hours.label")}
+        </div>
+        <div class="text-base text-white/85">
+          {t(lang, "home.sequence.footer.hours.value")}
+        </div>
+      </div>
+      <div class="flex flex-col gap-3 bg-[#1a1c1e] px-6 py-7">
+        <div class="font-mono text-[0.6rem] uppercase tracking-[0.3em] text-white/40">
+          {t(lang, "home.sequence.footer.contact.label")}
+        </div>
+        <a href="mailto:hello@procareqatar.com" class="block text-base text-white/85 transition-colors hover:text-[#FF5B1F]">
+          {t(lang, "home.sequence.footer.contact.email")}
+        </a>
+        <a href="tel:+97400000000" class="block text-base text-white/85 transition-colors hover:text-[#FF5B1F]">
+          {t(lang, "home.sequence.footer.contact.phone")}
+        </a>
+      </div>
+    </div>
+
     <!-- Site links + meta -->
-    <div class="mt-auto grid grid-cols-1 gap-8 border-t border-white/10 pt-10 md:grid-cols-12">
+    <div class="mt-12 grid grid-cols-1 gap-8 border-t border-white/10 pt-10 md:grid-cols-12">
       <div class="md:col-span-5">
         <div class="font-mono text-[0.6rem] uppercase tracking-[0.3em] text-white/40">
           {t(lang, "footer.registry")}

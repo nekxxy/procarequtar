@@ -1,0 +1,53 @@
+---
+import { t, type Locale } from "../../i18n/utils";
+import RevealOnScroll from "../react/RevealOnScroll.tsx";
+import SplitText from "../react/SplitText.tsx";
+
+interface Props {
+  lang: Locale;
+}
+const { lang } = Astro.props;
+---
+
+<section
+  class="relative overflow-hidden border-t border-white/10 px-6 py-32 md:px-12 md:py-44"
+  style="background:#1a1c1e"
+>
+  <!-- Ambient dual orbs -->
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute -left-32 top-1/2 h-[36rem] w-[36rem] -translate-y-1/2 rounded-full bg-[radial-gradient(circle,#FF5B1F1F,transparent_60%)] blur-3xl"
+  >
+  </div>
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute -right-32 bottom-0 h-[28rem] w-[28rem] rounded-full bg-[radial-gradient(circle,#6C5CE71F,transparent_60%)] blur-3xl"
+  >
+  </div>
+
+  <div class="relative mx-auto grid max-w-[78rem] grid-cols-1 gap-12 md:grid-cols-12 md:gap-16">
+    <div class="md:col-span-4">
+      <span
+        class="inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-white/[0.04] px-3 py-1.5 font-mono text-[0.6rem] uppercase tracking-[0.3em] text-white/70 backdrop-blur"
+      >
+        <span class="inline-block h-1.5 w-1.5 rounded-full bg-[#FF5B1F]" aria-hidden="true"></span>
+        {t(lang, "home.sequence.manifesto.eyebrow")}
+      </span>
+
+      <p class="mt-8 text-base leading-relaxed text-white/55 md:text-lg">
+        {t(lang, "home.sequence.manifesto.lead")}
+      </p>
+    </div>
+
+    <RevealOnScroll client:visible className="md:col-span-8 flex flex-col gap-10">
+      <h2 class="text-balance text-[clamp(2.75rem,8vw,6.5rem)] font-medium leading-[0.96] tracking-[-0.035em] text-white">
+        <SplitText client:visible split="words" stagger={0.05}>
+          {t(lang, "home.sequence.manifesto.title")}
+        </SplitText>
+      </h2>
+      <p class="max-w-2xl text-base leading-relaxed text-white/70 md:text-xl">
+        {t(lang, "home.sequence.manifesto.body")}
+      </p>
+    </RevealOnScroll>
+  </div>
+</section>

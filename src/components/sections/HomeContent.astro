@@ -6,6 +6,11 @@ import {
 } from "../../i18n/utils";
 import MinimalHero from "./MinimalHero.astro";
 import ScrollSequenceSection from "./ScrollSequenceSection.astro";
+import CredentialsStrip from "./CredentialsStrip.astro";
+import CapabilitiesList from "./CapabilitiesList.astro";
+import HomeStatsBand from "./HomeStatsBand.astro";
+import HomeMarquee from "./HomeMarquee.astro";
+import ManifestoCard from "./ManifestoCard.astro";
 import MinimalFooter from "./MinimalFooter.astro";
 
 interface Props {
@@ -21,5 +26,15 @@ void defaultLocale;
 <MinimalHero lang={lang} />
 
 <ScrollSequenceSection lang={lang} />
+
+<CredentialsStrip lang={lang} />
+
+<CapabilitiesList lang={lang} />
+
+<HomeMarquee lang={lang} />
+
+<ManifestoCard lang={lang} />
+
+<HomeStatsBand lang={lang} />
 
 <MinimalFooter lang={lang} otherLocale={otherLocale} />

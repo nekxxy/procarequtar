@@ -91,23 +91,108 @@
     },
     "sequence": {
       "hero": {
-        "eyebrow": "Pro Care · Doha",
+        "eyebrow": "Pro Care · Doha · Est. 2021",
         "title": "Engineered care, in 240 frames.",
-        "lead": "Scroll through one continuous build — from concrete pour to handover.",
-        "scrollCue": "Scroll to explore"
+        "lead": "Scroll through one continuous build — from concrete pour to post-handover maintenance. Five licensed disciplines under one operator. Zero hand-offs.",
+        "scrollCue": "Scroll to explore",
+        "ticker": ["410029", "433091", "475281", "811003", "812904", "Doha", "Qatar", "Bilingual delivery"]
       },
       "overlays": [
-        { "at": 0.12, "eyebrow": "01 / 04", "title": "Engineered care." },
-        { "at": 0.32, "eyebrow": "02 / 04", "title": "Five disciplines, one team." },
-        { "at": 0.55, "eyebrow": "03 / 04", "title": "Construction. Cleaning. Care." },
-        { "at": 0.80, "eyebrow": "04 / 04", "title": "Pro Care · Doha · Qatar" }
+        { "at": 0.10, "eyebrow": "01 / 06", "title": "Engineered care." },
+        { "at": 0.25, "eyebrow": "02 / 06", "title": "Five disciplines." },
+        { "at": 0.40, "eyebrow": "03 / 06", "title": "One accountable team." },
+        { "at": 0.55, "eyebrow": "04 / 06", "title": "Construction. Cleaning. Maintenance." },
+        { "at": 0.72, "eyebrow": "05 / 06", "title": "Built for Qatar." },
+        { "at": 0.88, "eyebrow": "06 / 06", "title": "Pro Care · C.R. 217949" }
+      ],
+      "credentials": {
+        "eyebrow": "On the record",
+        "title": "Licensed under five activities. Run as one operator.",
+        "lead": "Every line on this page is backed by a Qatar Ministry of Commerce registry entry — no pass-through, no sub-contract chain.",
+        "items": [
+          { "label": "Registry no.", "value": "217949" },
+          { "label": "Capital", "value": "QAR 100,000" },
+          { "label": "Activities", "value": "Five licensed" },
+          { "label": "Based in", "value": "Doha, Qatar" }
+        ]
+      },
+      "capabilities": {
+        "eyebrow": "What we operate",
+        "title": "Five trades. One project lead.",
+        "lead": "Each line is licensed independently. Together they collapse the seam between every phase of a building's life.",
+        "rows": [
+          {
+            "code": "410029",
+            "title": "Construction",
+            "body": "Ground-up commercial buildings, retail and hospitality fit-outs, MEP coordination, snag close-out, signed handover."
+          },
+          {
+            "code": "433091",
+            "title": "Post-construction cleaning",
+            "body": "Three-stage rough-detail-final cleans. Concrete dust extraction, glass and frame polish, HVAC vent decontamination."
+          },
+          {
+            "code": "475281",
+            "title": "Building materials",
+            "body": "Direct-from-source retail of cement, blocks, plaster and tiles. Trade pricing, mixed-load delivery across the country."
+          },
+          {
+            "code": "811003",
+            "title": "Facility maintenance",
+            "body": "Hard FM and soft FM run on SLAs. PPM, reactive repairs, housekeeping, landscaping. 24/7 dispatch and CAFM reporting."
+          },
+          {
+            "code": "812904",
+            "title": "Pest control",
+            "body": "MOPH-aligned disinfection and pest cycles. Cockroaches, rodents, termites, bed bugs, mosquito fogging."
+          }
+        ]
+      },
+      "stats": {
+        "eyebrow": "By the numbers",
+        "title": "Pro Care, in numbers.",
+        "items": [
+          { "value": 120, "suffix": "+", "label": "Sites delivered" },
+          { "value": 48, "suffix": "h", "label": "Average response" },
+          { "value": 5, "suffix": "", "label": "Licensed activities" },
+          { "value": 99, "suffix": "%", "label": "Client retention" }
+        ]
+      },
+      "manifesto": {
+        "eyebrow": "How we think",
+        "lead": "Most Qatar contractors lose weeks at the seams between trades — every hand-off is a renegotiation, every renegotiation is delay.",
+        "title": "We don't have seams.",
+        "body": "Pro Care holds licenses across construction, cleaning, materials, facility management and pest control. One project lead, one accountable team, one phone number — from breaking ground to year-three FM."
+      },
+      "marquee": [
+        "C.R. 217949",
+        "Doha · Qatar",
+        "Five licensed activities",
+        "Bilingual delivery",
+        "ISO-aligned process",
+        "24/7 dispatch",
+        "Documented handover",
+        "Local sourcing"
       ],
       "footer": {
         "eyebrow": "Start the conversation",
         "title": "Tell us about your site.",
-        "subtitle": "Quote within one business day.",
+        "subtitle": "Brief us on the location, stage and trade you need. Quote back within one business day, in English or Arabic.",
         "primaryCta": "Start a project",
-        "secondaryCta": "See our work"
+        "secondaryCta": "See our work",
+        "office": {
+          "label": "Office",
+          "value": "Doha, State of Qatar"
+        },
+        "hours": {
+          "label": "Hours",
+          "value": "Sun – Thu · 08:00 – 18:00 AST"
+        },
+        "contact": {
+          "label": "Direct",
+          "phone": "+974 0000 0000",
+          "email": "hello@procareqatar.com"
+        }
       },
       "loader": "Loading sequence",
       "skip": "Skip intro"

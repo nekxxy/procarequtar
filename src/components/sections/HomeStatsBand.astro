@@ -1,0 +1,44 @@
+---
+import { t, tn, type Locale } from "../../i18n/utils";
+import StatsCounter from "../react/StatsCounter.tsx";
+
+interface Props {
+  lang: Locale;
+}
+const { lang } = Astro.props;
+interface StatItem {
+  value: number;
+  suffix: string;
+  label: string;
+}
+const items = tn<StatItem[]>(lang, "home.sequence.stats.items");
+---
+
+<section
+  class="relative overflow-hidden border-t border-white/10 px-6 py-28 md:px-12 md:py-32"
+  style="background:#1a1c1e"
+>
+  <div
+    aria-hidden="true"
+    class="pointer-events-none absolute inset-x-0 top-0 h-[40svh] bg-[radial-gradient(60%_60%_at_50%_0%,#FF5B1F1A,transparent_70%)]"
+  >
+  </div>
+
+  <div class="relative mx-auto max-w-[78rem]">
+    <div class="flex flex-col gap-3 md:flex-row md:items-end md:justify-between md:gap-12">
+      <span
+        class="inline-flex items-center gap-2.5 self-start rounded-full border border-white/15 bg-white/[0.04] px-3 py-1.5 font-mono text-[0.6rem] uppercase tracking-[0.3em] text-white/70 backdrop-blur"
+      >
+        <span class="inline-block h-1.5 w-1.5 rounded-full bg-[#FF5B1F]" aria-hidden="true"></span>
+        {t(lang, "home.sequence.stats.eyebrow")}
+      </span>
+      <h2 class="max-w-[18ch] text-balance text-[clamp(2rem,5vw,3.5rem)] font-medium leading-[1.0] tracking-[-0.025em] text-white/90">
+        {t(lang, "home.sequence.stats.title")}
+      </h2>
+    </div>
+
+    <div class="mt-16 text-white">
+      <StatsCounter client:visible items={items} />
+    </div>
+  </div>
+</section>

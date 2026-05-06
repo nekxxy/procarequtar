@@ -1,10 +1,12 @@
 ---
-import { t, type Locale } from "../../i18n/utils";
+import { t, tn, type Locale } from "../../i18n/utils";
 
 interface Props {
   lang: Locale;
 }
 const { lang } = Astro.props;
+const tickerWords = tn<string[]>(lang, "home.sequence.hero.ticker");
+const tickerLoop = [...tickerWords, ...tickerWords];
 ---
 
 <section
@@ -38,6 +40,25 @@ const { lang } = Astro.props;
       {t(lang, "home.sequence.hero.lead")}
     </p>
 
+    <!-- Activity-code ticker -->
+    <div
+      class="relative -mx-6 mt-4 overflow-hidden border-y border-white/10 py-3 md:-mx-10"
+      aria-hidden="true"
+    >
+      <div class="hero-ticker flex w-max items-center gap-8 md:gap-12">
+        {
+          tickerLoop.map((w) => (
+            <span class="flex shrink-0 items-center gap-8 md:gap-12">
+              <span class="whitespace-nowrap font-mono text-[0.65rem] uppercase tracking-[0.3em] text-white/55">
+                {w}
+              </span>
+              <span class="inline-block h-1 w-1 shrink-0 rounded-full bg-white/25" />
+            </span>
+          ))
+        }
+      </div>
+    </div>
+
     <!-- Scroll cue -->
     <div class="mt-auto flex items-end justify-between gap-6">
       <div class="flex items-center gap-3">
@@ -49,13 +70,34 @@ const { lang } = Astro.props;
         </span>
       </div>
       <div class="font-mono text-[0.6rem] uppercase tracking-[0.25em] text-white/35">
-        240 frames
+        240 frames · 06 chapters
       </div>
     </div>
   </div>
 </section>
 
 <style>
+  @keyframes hero-ticker-scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  .hero-ticker {
+    animation: hero-ticker-scroll 28s linear infinite;
+    will-change: transform;
+  }
+  :global([dir="rtl"]) .hero-ticker {
+    animation-direction: reverse;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-ticker {
+      animation: none;
+    }
+  }
+
   @keyframes scrollCueFlow {
     0% {
       transform: scaleY(0);

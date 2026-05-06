@@ -1,0 +1,55 @@
+---
+import { tn, type Locale } from "../../i18n/utils";
+
+interface Props {
+  lang: Locale;
+}
+const { lang } = Astro.props;
+const items = tn<string[]>(lang, "home.sequence.marquee");
+const repeated = [...items, ...items, ...items];
+---
+
+<section
+  class="relative overflow-hidden border-y border-white/10"
+  style="background:#1a1c1e"
+  aria-hidden="true"
+>
+  <div class="home-marquee flex w-max items-center gap-12 py-10 md:gap-16 md:py-14">
+    {
+      repeated.map((item, i) => (
+        <span class="flex shrink-0 items-center gap-12 md:gap-16">
+          <span class="display whitespace-nowrap text-[clamp(2rem,6vw,4.5rem)] font-medium tracking-[-0.025em] text-white/90">
+            {item}
+          </span>
+          <span
+            aria-hidden="true"
+            class="inline-block h-2 w-2 shrink-0 rounded-full bg-[#FF5B1F]"
+          />
+        </span>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  @keyframes home-marquee-scroll {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-33.333%);
+    }
+  }
+  .home-marquee {
+    animation: home-marquee-scroll 36s linear infinite;
+    will-change: transform;
+  }
+  :global([dir="rtl"]) .home-marquee {
+    animation-direction: reverse;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .home-marquee {
+      animation: none;
+    }
+  }
+</style>
