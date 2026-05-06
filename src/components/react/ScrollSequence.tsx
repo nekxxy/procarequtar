@@ -275,28 +275,54 @@ export default function ScrollSequence({
           <span aria-hidden="true" className="rtl:rotate-180">→</span>
         </a>
 
-        {/* Parallax overlay text */}
+        {/* Parallax overlay text — each overlay travels a full viewport
+            height as its scroll window plays. Alternating alignment +
+            mix-blend-mode keeps it editorial, not stacked. */}
         {overlays.map((o, i) => {
-          const window = 0.06; // fade ramp
-          const enterFrom = o.at - window * 2.5;
-          const enterTo = o.at - window * 0.5;
-          const exitFrom = o.at + window * 0.5;
-          const exitTo = o.at + window * 2.5;
-          const opacity = reduced
-            ? 1
-            : smoothstep(enterFrom, enterTo, progress) -
-              smoothstep(exitFrom, exitTo, progress);
-          const translateY = reduced ? 0 : (1 - opacity) * 24;
+          // Window of scroll progress this overlay owns. Generous size +
+          // overlap is fine — they cross-fade naturally.
+          const winSize = 0.28;
+          const winStart = o.at - winSize * 0.5;
+          const local = (progress - winStart) / winSize; // 0..1 within window
+          const c = Math.max(0, Math.min(1, local));
+
+          // Vertical travel: enters from below the viewport, exits above
+          const TRAVEL_VH = 130; // total vertical journey
+          const yVh = reduced ? 0 : (0.5 - c) * TRAVEL_VH; // +65 → -65vh
+
+          // Eased opacity ramp — quick fade in, hold, quick fade out
+          const fadeIn = c < 0.18 ? c / 0.18 : 1;
+          const fadeOut = c > 0.82 ? (1 - c) / 0.18 : 1;
+          const opacity = reduced ? 1 : Math.max(0, Math.min(fadeIn, fadeOut));
+
+          // Subtle horizontal drift for parallax depth
+          const xDrift = reduced ? 0 : (c - 0.5) * 12; // +/-6 px
+
+          // Editorial alignment per overlay
+          const alignments: Array<"start" | "center" | "end"> = [
+            "center",
+            "start",
+            "center",
+            "end",
+          ];
+          const align = alignments[i % alignments.length] ?? "center";
+          const justify =
+            align === "start"
+              ? "items-start text-start"
+              : align === "end"
+                ? "items-end text-end"
+                : "items-center text-center";
+
           return (
             <div
               key={i}
               ref={(el) => {
                 overlayRefs.current[i] = el;
               }}
-              className="pointer-events-none absolute inset-x-0 top-1/2 z-10 mx-auto flex max-w-[60rem] -translate-y-1/2 flex-col items-center px-6 text-center"
+              className={`pointer-events-none absolute inset-x-0 top-1/2 z-10 mx-auto flex max-w-[78rem] flex-col px-6 md:px-12 ${justify}`}
               style={{
-                opacity: Math.max(0, opacity),
-                transform: `translate3d(0, calc(-50% + ${translateY}px), 0)`,
+                opacity,
+                transform: `translate3d(${xDrift}px, calc(-50% + ${yVh}vh), 0)`,
                 willChange: "opacity, transform",
               }}
             >
@@ -305,9 +331,21 @@ export default function ScrollSequence({
                   {o.eyebrow}
                 </div>
               )}
-              <h2 className="mt-3 max-w-[18ch] text-balance text-[clamp(2rem,7vw,5.5rem)] font-medium leading-[1.02] tracking-[-0.025em] text-white/90">
+              <h2
+                className="mt-3 max-w-[20ch] text-balance text-[clamp(2.5rem,9vw,7rem)] font-medium leading-[0.98] tracking-[-0.03em] text-white"
+                style={{ mixBlendMode: "difference" }}
+              >
                 {o.title}
               </h2>
+              {/* Thin rule that scales with progress — extra cinematic detail */}
+              <span
+                aria-hidden="true"
+                className="mt-6 block h-px bg-white/30"
+                style={{
+                  width: `${Math.round(c * 100)}px`,
+                  maxWidth: "30vw",
+                }}
+              />
             </div>
           );
         })}
