@@ -50,78 +50,124 @@ export default function ScrollSequence({
   const targetFrame = useRef(1);
   const rafQueued = useRef(false);
   const [progress, setProgress] = useState(0);
+  const [loadProgress, setLoadProgress] = useState(0);
   const [ready, setReady] = useState(false);
   const [reduced, setReduced] = useState(false);
+  // Index of the highest frame group that has been loaded so far.
+  // Used by `draw()` to pick the nearest available frame for any target idx.
+  const loadedMaskRef = useRef<Uint8Array>(new Uint8Array(0));
 
-  // ---- Frame preload --------------------------------------------------
+  // ---- Progressive frame load ----------------------------------------
+  //
+  // Three phases, each yields control back to the event loop so the page
+  // stays interactive throughout:
+  //
+  //   1. Frame 1 alone — paints the canvas immediately (~25 KB).
+  //   2. Keyframes every Nth frame — enables coarse scrub (~400 KB).
+  //   3. Gap-fill in interleaved order — smooth scrub fully ready (~5 MB).
+  //
+  // The canvas's `draw()` always picks the nearest *loaded* frame for the
+  // current scroll target, so users can start scrubbing the moment phase 2
+  // completes (or even during it).
   useEffect(() => {
     if (typeof window === "undefined") return;
 
     const isReducedMotion = window.matchMedia(
       "(prefers-reduced-motion: reduce)",
     ).matches;
-    const isReducedData =
-      typeof (navigator as { connection?: { saveData?: boolean } }).connection
-        ?.saveData === "boolean"
-        ? Boolean(
-            (navigator as { connection?: { saveData?: boolean } }).connection
-              ?.saveData,
-          )
-        : false;
+    const conn = (navigator as { connection?: { saveData?: boolean; effectiveType?: string } }).connection;
+    const isReducedData = Boolean(conn?.saveData);
+    const slowNetwork = conn?.effectiveType === "2g" || conn?.effectiveType === "slow-2g";
     setReduced(isReducedMotion);
 
     const isMobile = window.matchMedia(`(max-width: ${mobileMaxWidth}px)`)
       .matches;
     const variant = isMobile ? "mobile" : "desktop";
-    const stride = isReducedData || isReducedMotion ? 4 : 1;
 
-    // Build the URL list (every Nth frame on reduced-data)
-    const urls: string[] = [];
-    for (let i = 1; i <= frameCount; i += stride) {
-      const id = String(i).padStart(3, "0");
-      urls.push(`${basePath}/${variant}/frame-${id}.webp`);
-    }
+    // Effective frame stride. Default mobile = every 2nd frame (120 frames).
+    // Reduced-data / slow-2g / reduced-motion → every 4th (60 frames).
+    const stride =
+      isReducedData || slowNetwork || isReducedMotion
+        ? 4
+        : isMobile
+          ? 2
+          : 1;
+
+    const total = Math.ceil(frameCount / stride);
+    const imgs: HTMLImageElement[] = new Array(total);
+    const mask = new Uint8Array(total);
+    imgsRef.current = imgs;
+    loadedMaskRef.current = mask;
 
     let cancelled = false;
-    const imgs: HTMLImageElement[] = [];
-    let loaded = 0;
-
-    async function loadBatch(start: number, size: number) {
-      const slice = urls.slice(start, start + size);
-      await Promise.all(
-        slice.map((src, k) => {
-          const img = new Image();
-          img.decoding = "async";
-          img.src = src;
-          imgs[start + k] = img;
-          return img
-            .decode()
-            .catch(() => undefined)
-            .then(() => {
-              loaded += 1;
-              if (!cancelled) {
-                setProgress(loaded / urls.length);
-              }
-            });
-        }),
-      );
-    }
+    let loadedCount = 0;
+    const loadOne = (idx: number) => {
+      if (idx < 0 || idx >= total || imgs[idx]) return Promise.resolve();
+      const frameNum = idx * stride + 1;
+      const id = String(frameNum).padStart(3, "0");
+      const img = new Image();
+      img.decoding = "async";
+      img.src = `${basePath}/${variant}/frame-${id}.webp`;
+      imgs[idx] = img;
+      return img
+        .decode()
+        .catch(() => undefined)
+        .then(() => {
+          if (cancelled) return;
+          mask[idx] = 1;
+          loadedCount += 1;
+          setLoadProgress(loadedCount / total);
+          // Prompt a redraw so any visible frame upgrades to the new closer one
+          queueDraw();
+        });
+    };
 
     (async () => {
-      const batchSize = 24;
-      for (let i = 0; i < urls.length; i += batchSize) {
-        if (cancelled) return;
-        await loadBatch(i, batchSize);
-      }
+      // Phase 1: first frame
+      await loadOne(0);
       if (cancelled) return;
-      imgsRef.current = imgs;
-      // For reduced-data we need to map original frame index → loaded index
+      // Show the canvas as soon as we have any frame to paint
       setReady(true);
+
+      // Phase 2: keyframes every K frames so scrub becomes usable fast
+      const phase2Step = Math.max(1, Math.round(total / 16));
+      const phase2: number[] = [];
+      for (let i = phase2Step; i < total; i += phase2Step) phase2.push(i);
+      // Concurrent keyframe load (8 at a time)
+      for (let i = 0; i < phase2.length; i += 8) {
+        if (cancelled) return;
+        await Promise.all(phase2.slice(i, i + 8).map((idx) => loadOne(idx)));
+      }
+
+      // Phase 3: fill the rest in interleaved order so the scrub keeps
+      // getting smoother evenly across the timeline (rather than leaving
+      // chunks at the end un-loaded).
+      const remaining: number[] = [];
+      for (let i = 1; i < total; i++) {
+        if (!mask[i]) remaining.push(i);
+      }
+      // Bit-reversed order ≈ even fill across the range
+      remaining.sort((a, b) => {
+        const distA = Math.min(...phase2.map((p) => Math.abs(a - p)));
+        const distB = Math.min(...phase2.map((p) => Math.abs(b - p)));
+        return distB - distA;
+      });
+      const concurrency = isMobile ? 4 : 6;
+      const queue = [...remaining];
+      const workers = Array.from({ length: concurrency }, async () => {
+        while (queue.length > 0 && !cancelled) {
+          const next = queue.shift();
+          if (next == null) break;
+          await loadOne(next);
+        }
+      });
+      await Promise.all(workers);
     })();
 
     return () => {
       cancelled = true;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [basePath, frameCount, mobileMaxWidth]);
 
   // ---- Resize canvas to viewport, with DPR -----------------------------
@@ -131,7 +177,12 @@ export default function ScrollSequence({
     if (!canvas) return;
 
     const fit = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      // Cap DPR at 1.75 on mobile and 2 on desktop — saves 15-30% of canvas
+      // pixel work without visible quality loss.
+      const isMobile = window.matchMedia(`(max-width: ${mobileMaxWidth}px)`)
+        .matches;
+      const dprCap = isMobile ? 1.75 : 2;
+      const dpr = Math.min(window.devicePixelRatio || 1, dprCap);
       const w = window.innerWidth;
       const h = window.innerHeight;
       canvas.width = Math.round(w * dpr);
@@ -140,20 +191,34 @@ export default function ScrollSequence({
       canvas.style.height = `${h}px`;
       const ctx = canvas.getContext("2d");
       if (ctx) ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      // Force a draw on next frame
       rafQueued.current = false;
       queueDraw();
+      // ScrollTrigger may need to recompute pin positions on viewport change
+      ScrollTrigger.refresh();
+    };
+
+    // Debounce — resize fires aggressively during continuous drag-resize
+    let resizeRaf = 0;
+    let resizeTimer = 0;
+    const onResize = () => {
+      cancelAnimationFrame(resizeRaf);
+      window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(() => {
+        resizeRaf = requestAnimationFrame(fit);
+      }, 120);
     };
 
     fit();
-    window.addEventListener("resize", fit);
-    window.addEventListener("orientationchange", fit);
+    window.addEventListener("resize", onResize, { passive: true });
+    window.addEventListener("orientationchange", onResize);
     return () => {
-      window.removeEventListener("resize", fit);
-      window.removeEventListener("orientationchange", fit);
+      window.removeEventListener("resize", onResize);
+      window.removeEventListener("orientationchange", onResize);
+      cancelAnimationFrame(resizeRaf);
+      window.clearTimeout(resizeTimer);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ready]);
+  }, [ready, mobileMaxWidth]);
 
   // ---- Scroll-tied frame index -----------------------------------------
   useEffect(() => {
@@ -199,8 +264,26 @@ export default function ScrollSequence({
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    const idx = reduced ? 0 : targetFrame.current;
-    const img = imgsRef.current[idx];
+    const target = reduced ? 0 : targetFrame.current;
+    // Fall back to nearest loaded frame if the exact target isn't ready yet
+    const mask = loadedMaskRef.current;
+    const imgs = imgsRef.current;
+    let idx = target;
+    if (!mask[idx]) {
+      // Search outward for the nearest loaded frame
+      let r = 1;
+      let found = -1;
+      while (r < imgs.length) {
+        const lo = target - r;
+        const hi = target + r;
+        if (lo >= 0 && mask[lo]) { found = lo; break; }
+        if (hi < imgs.length && mask[hi]) { found = hi; break; }
+        r += 1;
+      }
+      if (found < 0) return; // nothing loaded yet
+      idx = found;
+    }
+    const img = imgs[idx];
     if (!img) return;
     currentFrame.current = idx;
 
@@ -243,9 +326,11 @@ export default function ScrollSequence({
           className="block h-full w-full"
         />
 
-        {/* Loading overlay */}
+        {/* Loading overlay — covers only until frame 1 is ready, then fades.
+            A tiny background load indicator (bottom-left) keeps showing
+            phase-2 / phase-3 progress without blocking interaction. */}
         <div
-          className="pointer-events-none absolute inset-0 flex items-center justify-center bg-[#1a1c1e] transition-opacity duration-700"
+          className="pointer-events-none absolute inset-0 flex items-center justify-center bg-[#1a1c1e] transition-opacity duration-500"
           style={{ opacity: ready ? 0 : 1 }}
           aria-live="polite"
           aria-busy={!ready}
@@ -257,14 +342,24 @@ export default function ScrollSequence({
             <div className="h-px w-40 overflow-hidden bg-white/10">
               <div
                 className="h-full bg-[#FF5B1F] transition-[width] duration-200"
-                style={{ width: `${Math.min(100, progress * 100)}%` }}
+                style={{ width: `${Math.min(100, loadProgress * 100)}%` }}
               />
-            </div>
-            <div className="font-mono text-[0.65rem] tabular-nums text-white/50">
-              {String(Math.round(progress * 100)).padStart(3, "0")} / 100
             </div>
           </div>
         </div>
+
+        {/* Background-fill indicator — shows once interaction is unlocked */}
+        {ready && loadProgress < 0.999 && (
+          <div
+            className="pointer-events-none absolute bottom-6 start-6 z-10 flex items-center gap-2 font-mono text-[0.55rem] uppercase tracking-[0.25em] text-white/35 transition-opacity duration-500"
+            aria-hidden="true"
+          >
+            <span className="relative inline-block h-1.5 w-1.5 rounded-full bg-[#FF5B1F]">
+              <span className="absolute inset-0 animate-ping rounded-full bg-[#FF5B1F]/60" />
+            </span>
+            <span>Loading frames · {Math.round(loadProgress * 100)}%</span>
+          </div>
+        )}
 
         {/* Skip intro */}
         <a
@@ -368,11 +463,11 @@ export default function ScrollSequence({
         {/* Frame counter (bottom right, monospace) */}
         <div className="absolute bottom-6 end-6 z-10 font-mono text-[0.65rem] uppercase tracking-[0.25em] text-white/40">
           <span className="tabular-nums text-white/70">
-            {String(Math.round(progress * 240))
+            {String(Math.round(progress * frameCount))
               .padStart(3, "0")}
           </span>
           <span className="mx-1">/</span>
-          240
+          {frameCount}
         </div>
       </div>
     </section>

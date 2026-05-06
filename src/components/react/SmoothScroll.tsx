@@ -24,10 +24,15 @@ export default function SmoothScroll(): null {
     registerGsap();
 
     const lenis = new Lenis({
-      lerp: 0.1,
+      // Tighter follow than the default 0.1 — feels more responsive on desktop
+      lerp: 0.08,
       smoothWheel: true,
-      wheelMultiplier: 1,
-      touchMultiplier: 1.2,
+      // Damp wheel so trackpad / scroll-wheel doesn't overshoot the scrub
+      wheelMultiplier: 0.95,
+      touchMultiplier: 1.4,
+      // Use easeOutExpo so deceleration feels cinematic, not robotic
+      easing: (x: number) => 1 - Math.pow(1 - x, 5),
+      syncTouch: true,
     });
     lenisInstance = lenis;
 
@@ -38,6 +43,14 @@ export default function SmoothScroll(): null {
     gsap.ticker.add(tick);
     gsap.ticker.lagSmoothing(0);
 
+    // Pause Lenis RAF when tab is hidden — saves battery on mobile and avoids
+    // queued scroll work that would all fire when the tab returns.
+    const onVisibility = () => {
+      if (document.hidden) lenis.stop();
+      else lenis.start();
+    };
+    document.addEventListener("visibilitychange", onVisibility);
+
     // Re-init on Astro view-transition page swaps
     const handleSwap = () => {
       lenis.scrollTo(0, { immediate: true });
@@ -47,6 +60,7 @@ export default function SmoothScroll(): null {
 
     return () => {
       document.removeEventListener("astro:after-swap", handleSwap);
+      document.removeEventListener("visibilitychange", onVisibility);
       gsap.ticker.remove(tick);
       lenis.destroy();
       lenisInstance = null;
