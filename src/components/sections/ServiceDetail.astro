@@ -22,6 +22,10 @@ const title = tn<string>(lang, `services.list.${slug}.title`);
 const tagline = tn<string>(lang, `services.list.${slug}.tagline`);
 const description = tn<string>(lang, `services.list.${slug}.description`);
 const scope = tn<string[]>(lang, `services.list.${slug}.scope`);
+const trades = tn<{ label: string; items: string[] } | undefined>(
+  lang,
+  `services.list.${slug}.trades`,
+);
 
 const others = SERVICE_SLUGS.filter((s) => s !== slug).slice(0, 4);
 ---
@@ -89,6 +93,46 @@ const others = SERVICE_SLUGS.filter((s) => s !== slug).slice(0, 4);
     </RevealOnScroll>
   </div>
 </section>
+
+{
+  trades && trades.items && trades.items.length > 0 && (
+    <section class="bg-[var(--color-bg)] text-[var(--color-fg)]">
+      <div class="mx-auto max-w-[100rem] px-6 pb-20 md:px-10 md:pb-28">
+        <RevealOnScroll
+          client:visible
+          className="rounded-[var(--radius-xl)] border border-[color-mix(in_srgb,var(--fg)_10%,transparent)] bg-[color-mix(in_srgb,var(--fg)_3%,transparent)] p-8 md:p-12"
+        >
+          <div class="grid grid-cols-1 gap-10 md:grid-cols-12 md:gap-12">
+            <div class="md:col-span-4">
+              <span class="eyebrow inline-flex items-center gap-2">
+                <span
+                  class="inline-block h-1.5 w-1.5 rounded-full bg-[var(--color-accent)]"
+                  aria-hidden="true"
+                />
+                {trades.label}
+              </span>
+              <p class="mt-4 text-sm text-[var(--muted)]">
+                {t(lang, "services.tradesNote")}
+              </p>
+            </div>
+            <div class="md:col-span-8">
+              <ul class="grid grid-cols-1 gap-x-6 gap-y-2 md:grid-cols-2">
+                {trades.items.map((role, i) => (
+                  <li class="flex items-baseline gap-3 border-b border-[color-mix(in_srgb,var(--fg)_8%,transparent)] py-3">
+                    <span class="font-mono text-[0.6rem] uppercase tracking-[0.25em] text-[var(--muted)]">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
+                    <span class="text-base text-[var(--fg)]">{role}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </RevealOnScroll>
+      </div>
+    </section>
+  )
+}
 
 <section class="bg-[var(--color-bg)] text-[var(--color-fg)]">
   <div class="mx-auto max-w-[100rem] px-6 pb-24 md:px-10 md:pb-32">

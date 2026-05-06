@@ -201,76 +201,157 @@
   "services": {
     "title": "Services",
     "subtitle": "Five licensed disciplines under one accountable operator.",
+    "tradesNote": "Direct hires under Pro Care supervision — no second-tier sub-contracting.",
     "list": {
       "construction": {
         "code": "410029",
         "title": "Construction",
         "tagline": "Non-residential builds, fit-outs and refurbishments.",
-        "description": "Ground-up construction and full interior fit-outs for commercial, retail, hospitality and industrial spaces. Project management, MEP coordination, snag-list close-out.",
+        "description": "Ground-up construction and full interior fit-outs for commercial, retail, hospitality and industrial spaces. Project management from design freeze through MEP coordination, snag close-out and signed handover. Civil, MEP, fit-out and finishing trades all run by Pro Care leads — no sub-contract chain between the slab and the keys.",
         "scope": [
-          "Ground-up commercial buildings",
-          "Office and retail fit-outs",
-          "Renovation and refurbishment",
-          "MEP coordination",
-          "Snag list and close-out",
-          "Handover documentation"
-        ]
+          "Ground-up commercial and industrial buildings",
+          "Office, retail and hospitality fit-outs",
+          "Refurbishment and structural renovation",
+          "MEP design coordination and site supervision",
+          "Civil works: foundations, structural steel, blockwork",
+          "Finishing trades: ceilings, partitions, painting, joinery",
+          "Façade installation and waterproofing",
+          "Site safety, HSE compliance and toolbox talks",
+          "Snag list, defect rectification, close-out",
+          "Signed handover with as-built drawings + warranty pack"
+        ],
+        "trades": {
+          "label": "Trades on every project",
+          "items": [
+            "Project engineers and site supervisors",
+            "Foremen and HSE officers",
+            "Masons, steel fixers and shutter carpenters",
+            "Electricians, plumbers and HVAC technicians",
+            "Pipe fitters, welders and insulators",
+            "Painters, ceiling and partition installers",
+            "Decorative finishers and joinery specialists",
+            "Heavy equipment and crane operators",
+            "Riggers, scaffolders and rebar fixers",
+            "General laborers and helpers"
+          ]
+        }
       },
       "post-construction-cleaning": {
         "code": "433091",
         "title": "Post-construction cleaning",
         "tagline": "Hand-over ready, every time.",
-        "description": "Three-stage post-construction cleaning: rough, detail and final. Concrete dust removal, glass and frame polish, HVAC vent decontamination, floor sealing.",
+        "description": "Three-stage post-construction cleaning programme — rough, detail and final — engineered to deliver a snag-free building on the day the keys change hands. Concrete dust extraction, glass and frame polish, HVAC vent decontamination, floor stripping and sealing, and a full handover walkthrough. Discreet overnight schedules available for occupied retail and hospitality assets.",
         "scope": [
-          "Rough → detail → final stages",
-          "Concrete dust extraction",
-          "Glass, frame and façade polish",
-          "HVAC vent decontamination",
-          "Floor stripping and sealing",
-          "Handover walkthrough"
-        ]
+          "Rough → detail → final three-stage programme",
+          "Concrete and silica dust extraction (HEPA)",
+          "Glass, mirror, frame and façade polish",
+          "HVAC vent and duct decontamination",
+          "Floor stripping, polishing and sealing",
+          "Carpet shampoo and upholstery extraction",
+          "High-rise and atrium cleaning with rope access",
+          "Bathroom and kitchen deep clean + sanitisation",
+          "Snag-list walkthrough with the main contractor",
+          "Quarterly maintenance cleans available post-handover"
+        ],
+        "trades": {
+          "label": "Crew on every site",
+          "items": [
+            "Cleaning supervisor and shift lead",
+            "Trained housekeeping technicians",
+            "Glass and façade specialists (rope-access certified)",
+            "HVAC duct cleaning crew",
+            "Floor care and polishing specialists",
+            "Kitchen and back-of-house deep-clean team"
+          ]
+        }
       },
       "building-materials": {
         "code": "475281",
         "title": "Building materials",
         "tagline": "Cement, blocks, plaster, tiles — sourced and delivered.",
-        "description": "Direct-from-source building materials retail with site delivery across Qatar. Trade pricing for repeat contractors, mixed-load tolerance, same-day dispatch on stocked SKUs.",
+        "description": "Direct-from-source building materials retail with site delivery across Qatar. Trade pricing for repeat contractors, mixed-load tolerance for small projects, same-day dispatch on stocked SKUs and scheduled delivery for site-coordinated pours. Inventory covers cement, masonry, finishing and MEP-adjacent materials so a single PO covers the bulk of a fit-out.",
         "scope": [
-          "Cement (OPC, SRC, white)",
-          "Hollow and solid blocks",
-          "Plaster and gypsum boards",
-          "Cement and ceramic tiles",
-          "Aggregates and sand",
-          "Site delivery, mixed loads"
-        ]
+          "Cement: OPC, SRC and white",
+          "Hollow, solid and lightweight blocks",
+          "Plaster, gypsum boards and GRC panels",
+          "Cement, ceramic, porcelain and terrazzo tiles",
+          "Aggregates, sand and admixtures",
+          "Steel rebar, BRC mesh and binding wire",
+          "MEP-adjacent: pipes, fittings, conduits, cable tray",
+          "Insulation, sealants and waterproofing membranes",
+          "Site delivery with mixed-load tolerance",
+          "Trade pricing and credit terms for repeat clients"
+        ],
+        "trades": {
+          "label": "Operations team",
+          "items": [
+            "Trade desk and order-management staff",
+            "Materials sourcing and procurement leads",
+            "Warehouse supervisor and inventory team",
+            "Heavy-truck drivers and forklift operators",
+            "Site-coordination delivery dispatchers"
+          ]
+        }
       },
       "facility-maintenance": {
         "code": "811003",
         "title": "Facility maintenance",
         "tagline": "Hard FM, soft FM, run on SLAs.",
-        "description": "Integrated facility management: HVAC, electrical, plumbing, civil, housekeeping, landscaping. SLA-backed reactive and PPM contracts for towers, malls, schools and labour camps.",
+        "description": "Integrated facility management for towers, malls, schools, labour camps and mixed-use assets. Hard FM (HVAC, electrical, plumbing, civil) and soft FM (housekeeping, landscaping, waste, security liaison) under one SLA. PPM and reactive contracts run from a CAFM helpdesk with 24/7 dispatch and monthly reporting. Compliant with Qatar Civil Defence inspection cycles.",
         "scope": [
-          "HVAC, electrical, plumbing, civil",
-          "PPM and reactive maintenance",
-          "Housekeeping and waste",
-          "Landscaping and pool care",
-          "Helpdesk and CAFM reporting",
-          "24/7 dispatch"
-        ]
+          "HVAC: chillers, AHUs, FCUs, ducting, BMS",
+          "Electrical: LV, MV, switchgear, generator and UPS",
+          "Plumbing: domestic water, drainage, pumps, water-tanks",
+          "Civil: minor repairs, painting, façade upkeep",
+          "Housekeeping and waste management",
+          "Landscaping, irrigation and pool care",
+          "Pest control integration (handled in-house)",
+          "Helpdesk, ticketing and CAFM reporting",
+          "Planned preventive maintenance (PPM) calendar",
+          "24/7 reactive dispatch and emergency response"
+        ],
+        "trades": {
+          "label": "FM workforce",
+          "items": [
+            "FM manager and CAFM coordinator",
+            "HVAC technicians and BMS operators",
+            "Electricians and switchgear specialists",
+            "Plumbers and water-system technicians",
+            "Civil technicians, painters and handymen",
+            "Housekeeping and waste-management staff",
+            "Landscapers, gardeners and pool technicians",
+            "Helpdesk operators and shift dispatchers",
+            "Drivers and heavy equipment operators"
+          ]
+        }
       },
       "pest-control": {
         "code": "812904",
         "title": "Pest control",
         "tagline": "Disinfection, fumigation, rodent control.",
-        "description": "MOPH-aligned disinfection and pest management. Cockroaches, rodents, bed bugs, termites, mosquitoes — discreet residential and overnight commercial schedules.",
+        "description": "MOPH-aligned disinfection and integrated pest management for residential, hospitality, food-service, healthcare and industrial assets. Targeted programmes for cockroaches, rodents, bed bugs, termites, mosquitoes and stored-product pests, plus general food-safe disinfection. Discreet residential schedules, overnight commercial slots and full pre/post-construction termite barriers.",
         "scope": [
-          "General disinfection (food-safe)",
-          "Cockroach and ant programmes",
-          "Rodent baiting and exclusion",
-          "Bed bug heat / chemical",
-          "Termite pre/post-construction",
-          "Mosquito fogging"
-        ]
+          "General disinfection (food-safe, MOPH-aligned chemicals)",
+          "Cockroach and ant baiting + gel programmes",
+          "Rodent baiting, exclusion and trap monitoring",
+          "Bed bug treatment: heat and chemical protocols",
+          "Termite barriers: pre-construction soil + post-construction",
+          "Mosquito fogging and larval-source reduction",
+          "Stored-product pest programmes for warehouses",
+          "Bird control and exclusion netting",
+          "Healthcare-grade fogging and surface sanitisation",
+          "Documented service reports for HACCP / ISO audits"
+        ],
+        "trades": {
+          "label": "Field team",
+          "items": [
+            "MOPH-licensed pest-control supervisor",
+            "Certified applicators and fumigators",
+            "Rope-access technicians for high-rise treatment",
+            "Healthcare and food-service specialists",
+            "Termite pre-construction soil-treatment crew"
+          ]
+        }
       }
     }
   },
