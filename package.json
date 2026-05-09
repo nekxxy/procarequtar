@@ -10,7 +10,9 @@
     "preview": "astro preview",
     "astro": "astro",
     "typecheck": "astro check",
-    "build:frames": "node scripts/build-frames.mjs"
+    "build:frames": "node scripts/build-frames.mjs",
+    "check": "npm run typecheck",
+    "check:all": "npm run check && npm run build"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",

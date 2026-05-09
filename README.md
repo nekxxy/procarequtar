@@ -14,6 +14,7 @@ npm run dev          # → http://localhost:4321
 npm run build        # → static dist/
 npm run preview
 npm run typecheck
+npm run check
 ```
 
 `/` redirects to `/en/`. The Arabic mirror lives under `/ar/`.
@@ -29,6 +30,12 @@ npm run typecheck
 - **Motion** — every animation primitive is documented in
   `docs/MOTION.md` with timing, easing, RTL behaviour and reduced-motion
   fallback.
+
+## Engineering quality
+
+- Continuous integration runs type-check + build on every pull request via `.github/workflows/ci.yml`.
+- Contributor expectations are documented in `CONTRIBUTING.md`.
+- Formatting defaults are standardized via `.editorconfig`.
 
 ## Documentation
 
